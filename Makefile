@@ -1,19 +1,32 @@
-.PHONY: setup simulate features train inference test lint format
+.PHONY: setup all pipeline simulate features train inference test lint format quality clean
 
-setup:
-	poetry install
+# Definindo variáveis para caminhos e comandos comuns
+PYTHON_RUN := poetry run python
+DATA_PROCESSED := data/processed/dataset.parquet
+MODEL_ARTIFACT := models/artifacts/model_xgb.joblib
+
+# ==============================================================================
+# FLUXO DE TRABALHO PRINCIPAL
+# ==============================================================================
+all: simulate features train test quality  ## Executa o pipeline completo (Simulação -> Treinamento -> Testes -> Qualidade)
 
 simulate:
-	poetry run python src/data/simulate_transactions.py --n_rows 200000 --fraud_rate 0.008
+	$(PYTHON_RUN) src/data/simulate_transactions.py --n_rows 200000 --fraud_rate 0.008
 
 features:
-	poetry run python src/pipelines/build_dataset.py --input data/raw/transactions.parquet --output data/processed/dataset.parquet
+	$(PYTHON_RUN) src/pipelines/build_dataset.py --input data/raw/transactions.parquet --output $(DATA_PROCESSED)
 
 train:
-	poetry run python src/pipelines/train_and_eval.py --data data/processed/dataset.parquet --model xgboost
+	$(PYTHON_RUN) src/pipelines/train_and_eval.py --data $(DATA_PROCESSED) --model xgboost
 
 inference:
-	poetry run python src/modeling/inference.py --model models/artifacts/model_xgb.joblib --n_events 1000
+	$(PYTHON_RUN) src/modeling/inference.py --model $(MODEL_ARTIFACT) --n_events 1000
+
+# ==============================================================================
+# QUALIDADE E LIMPEZA
+# ==============================================================================
+
+quality: format lint test ## Executa formatação, lint e testes
 
 test:
 	poetry run pytest -q
@@ -23,3 +36,11 @@ lint:
 
 format:
 	poetry run black src tests
+
+setup:
+	poetry install
+
+clean:
+	@echo "Limpando artefatos gerados (datasets e modelos)..."
+	rm -rf data/processed/*
+	rm -rf models/artifacts/*
