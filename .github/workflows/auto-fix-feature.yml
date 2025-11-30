@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write   # necessário para commit/push
+      pull-requests: write   # necessário para comentar no PR
 
     steps:
     - name: Checkout repository
@@ -39,3 +40,14 @@ jobs:
       with:
         commit_message: "chore: auto-fix style issues (Black + Ruff + Isort)"
         branch: ${{ github.ref_name }}
+
+    - name: Comment on PR
+      if: github.event_name == 'pull_request'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: auto-fix-feature
+        message: |
+          ✅ Correções automáticas de estilo foram aplicadas neste branch de feature.
+          - Ferramentas usadas: **Black** (formatação), **Ruff** (lint + fix), **Isort** (imports).
+          - Commit gerado: `chore: auto-fix style issues (Black + Ruff + Isort)`
+          - Agora o código segue o padrão definido no `pyproject.toml` e deve passar no CI.
