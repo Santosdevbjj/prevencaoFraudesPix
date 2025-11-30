@@ -32,7 +32,6 @@ def test_no_leakage_should_pass():
         "feature_A": [1, 2],
         "time_since_last_pix": [100, 200]
     })
-    
     # A função deve rodar sem levantar exceções
     try:
         check_no_leakage(df_clean)
