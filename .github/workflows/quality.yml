@@ -26,7 +26,7 @@ jobs:
         poetry install
 
     # ---------------------------
-    # Black - formatação
+    # Black - verificação de formatação
     # ---------------------------
     - name: Run Black (check only)
       run: poetry run black --check src tests
