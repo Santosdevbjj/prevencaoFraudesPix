@@ -25,30 +25,14 @@ jobs:
         pip install poetry
         poetry install
 
-    # ---------------------------
-    # Black - formatação
-    # ---------------------------
     - name: Run Black (check only)
-      run: |
-        poetry run black --check src tests
+      run: poetry run black --check src tests
 
-    # ---------------------------
-    # Ruff - linting
-    # ---------------------------
     - name: Run Ruff
-      run: |
-        poetry run ruff check src tests
+      run: poetry run ruff check src tests
 
-    # ---------------------------
-    # Isort - organização de imports
-    # ---------------------------
     - name: Run Isort (check only)
-      run: |
-        poetry run isort --check-only src tests
+      run: poetry run isort --check-only src tests
 
-    # ---------------------------
-    # Mypy - checagem de tipos
-    # ---------------------------
     - name: Run Mypy
-      run: |
-        poetry run mypy src
+      run: poetry run mypy src
