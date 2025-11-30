@@ -26,11 +26,10 @@ def test_shift_prevents_leakage_and_counts_correctly():
     df_result = features_time_based(df_test)
 
     # 3. Assertions (Validações Cruciais)
-    
     # Validação A (Anti-Leakage): A primeira transação deve ter 0, mesmo que não haja 1h de histórico.
     # Se fosse 1, haveria vazamento.
     assert df_result["numpixlast_1h"].iloc[0] == 0, "Falha no Anti-Leakage: T0 deve ser 0."
-    
+
     # Validação B (Contagem Correta): A segunda transação (T1, 00:30:00) deve contar 1 evento anterior (T0).
     assert df_result["numpixlast_1h"].iloc[1] == 1, "Falha na Contagem: T1 deve contar 1 evento."
 
