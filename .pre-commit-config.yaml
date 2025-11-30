@@ -1,0 +1,21 @@
+repos:
+  # Black - formatação automática
+  - repo: https://github.com/psf/black
+    rev: 24.4.2  # versão estável
+    hooks:
+      - id: black
+        language_version: python3.12
+
+  # Ruff - linting e correções rápidas
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9  # versão estável
+    hooks:
+      - id: ruff
+        args: [--fix]
+
+  # Isort - organização de imports
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        language_version: python3.12
