@@ -1,2 +1,550 @@
-# prevencaoFraudesPix
-Sistema de Prevenção de Fraudes em Pix  em Tempo Real
+# Sistema de Prevenção de Fraudes em Pix  em Tempo Real
+
+
+......
+
+
+---
+
+Visão geral do projeto de prevenção de fraudes em Pix
+
+Este guia entrega a documentação completa e profissional do projeto “Prevenção de Fraudes em Pix”, com foco em engenharia de dados, modelagem, implantação de pipelines e governança de qualidade. O repositório base está publicado no GitHub.
+
+---
+
+Objetivos do sistema
+
+- Detectar transações suspeitas de fraude em Pix em tempo real.
+- Minimizar falsos positivos sem perder sensibilidade a fraudes.
+- Suportar operação com latência baixa, com métricas de qualidade monitoradas e reprodutibilidade via pipelines e testes.
+
+---
+
+Escopo e entregáveis
+
+- Estrutura de projeto padronizada (src/data, src/features, src/modeling, src/pipelines, notebooks, tests).
+- Pipelines para simulação de dados, construção de dataset, treinamento, avaliação e inferência.
+- Linting e formatação com Ruff, Black, Isort; tipos com Mypy; CI no GitHub Actions; pre-commit.
+- Relatórios executivos e financeiros para tomada de decisão.
+
+> Repositório: Santosdevbjj/prevencaoFraudesPix
+
+---
+
+Passo a passo para criar e executar o projeto
+
+Preparação do ambiente
+
+- Hardware recomendado:
+  - CPU de múltiplos núcleos (4+), 16 GB RAM para treinos confortáveis.
+  - 10–20 GB de disco para artefatos e datasets intermediários.
+- Software:
+  - Python 3.12.
+  - Poetry 1.7+ para gerenciar dependências e ambientes.
+  - Git e GitHub para versionamento e CI.
+  - Make (GNU Make) para comandos padronizados.
+  - JupyterLab/Notebook para exploração.
+
+Instalação
+
+1. Instale Python 3.12 e pip.
+2. Instale Poetry:
+   - Linux/macOS: curl -sSL https://install.python-poetry.org | python3 -
+   - Windows: via installer oficial do Poetry.
+3. Clone o repositório:
+   - git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
+   - cd prevencaoFraudesPix
+4. Crie e ative o ambiente:
+   - poetry install (ou poetry install --no-root se não for empacotar o projeto)
+5. Instale pre-commit e ative hooks:
+   - poetry run pre-commit install
+
+Execução de qualidade local
+
+- Formatação e lint:
+  - poetry run black src tests
+  - poetry run ruff check src tests --fix
+  - poetry run isort src tests
+- Tipos:
+  - poetry run mypy src
+
+Execução de pipelines
+
+- Construir dataset:
+  - poetry run python src/pipelines/build_dataset.py
+- Treinar e avaliar:
+  - poetry run python src/pipelines/trainandeval.py
+- Inferência:
+  - poetry run python src/modeling/inference.py
+
+---
+
+README.md profissional
+
+Título
+
+Prevenção de Fraudes em Pix — Sistema de detecção em tempo real
+
+Descrição
+
+Este projeto implementa um pipeline completo para simulação de transações, engenharia de atributos, treinamento de modelos (logística e XGBoost), avaliação e inferência em tempo real. A organização segue práticas de Data Science profissional, com qualidade garantida por CI, testes e linters.
+
+Tecnologias utilizadas
+
+- Linguagem: Python 3.12.
+- Ciência de Dados:
+  - Pandas, Polars, NumPy, PyArrow.
+  - Scikit-learn, XGBoost, LightGBM.
+  - Matplotlib, Seaborn para visualização.
+- Qualidade:
+  - Black (formatação), Ruff (lint), Isort (imports), Mypy (tipos).
+  - Pytest (testes).
+- DevOps:
+  - GitHub Actions (CI), pre-commit, Makefile, Poetry.
+
+Requisitos
+
+- Hardware:
+  - CPU 4+ cores, 16 GB RAM, SSD recomendado.
+- Software:
+  - Python 3.12, Poetry 1.7+, Git, Make.
+  - JupyterLab para notebooks.
+
+Instalação e execução
+
+1. Clone o repositório:
+   - git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
+   - cd prevencaoFraudesPix
+2. Instale dependências:
+   - poetry install
+3. Qualidade:
+   - poetry run black src tests
+   - poetry run ruff check src tests --fix
+   - poetry run isort src tests
+   - poetry run mypy src
+4. Pipelines:
+   - poetry run python src/pipelines/build_dataset.py
+   - poetry run python src/pipelines/trainandeval.py
+5. Notebooks:
+   - poetry run jupyter lab
+   - Abra notebooks/01eda.ipynb, 02featureinspection.ipynb, 03threshold_analysis.ipynb.
+
+Estrutura do repositório
+
+`
+prevencaoFraudesPix/
+├── README.md
+├── LICENSE
+├── .gitignore
+├── pyproject.toml
+├── requirements.txt
+├── dev-requirements.txt
+├── setup.cfg
+├── Makefile
+├── .pre-commit-config.yaml
+├── data/
+│   ├── raw/
+│   ├── interim/
+│   └── processed/
+├── models/
+│   ├── artifacts/
+│   └── reports/
+├── src/
+│   ├── data/
+│   │   ├── simulate_transactions.py
+│   │   ├── schemas.py
+│   │   └── utils.py
+│   ├── features/
+│   │   ├── timewindowspolars.py
+│   │   ├── categorical.py
+│   │   └── validators.py
+│   ├── modeling/
+│   │   ├── train_logreg.py
+│   │   ├── train_xgboost.py
+│   │   ├── evaluate.py
+│   │   └── inference.py
+│   ├── pipelines/
+│   │   ├── build_dataset.py
+│   │   └── trainandeval.py
+│   └── utils/
+│       ├── io.py
+│       ├── metrics.py
+│       └── config.py
+├── tests/
+│   ├── testtimewindows.py
+│   ├── testleakageguards.py
+│   └── testinferencelatency.py
+├── notebooks/
+│   ├── 01_eda.ipynb
+│   ├── 02featureinspection.ipynb
+│   └── 03thresholdanalysis.ipynb
+└── .github/workflows/
+    ├── ci.yaml
+    ├── quality.yml
+    ├── auto-fix.yml
+    ├── auto-fix-push.yml
+    ├── auto-fix-feature.yml
+    └── auto-fix-combined.yml
+`
+
+Explicação das pastas e arquivos
+
+- data/
+  - raw/: dados brutos simulados ou provenientes de logs.
+  - interim/: dados intermediários após limpeza/validações.
+  - processed/: dataset final com features para treino/inferência.
+- models/
+  - artifacts/: modelos treinados, encoders e escalers salvos.
+  - reports/: relatórios de métricas, curvas ROC/PR, confusion matrices.
+- src/data/
+  - simulate_transactions.py: gera transações Pix sintéticas com rótulos de fraude, distribuição de valores e padrões temporais.
+  - schemas.py: esquemas de colunas (tipos, obrigatoriedade) para garantir consistência.
+  - utils.py: utilidades de ingestão, validação básica e seed control.
+- src/features/
+  - timewindowspolars.py: agregações em janelas de tempo (ex.: contagem por minuto, soma de valores por hora) usando Polars para alta performance.
+  - categorical.py: encoding/normalização de variáveis categóricas (ex.: tipo de chave Pix, dispositivo).
+  - validators.py: guardrails de vazamento e sanidade (ex.: impedir uso de labels futuras).
+- src/modeling/
+  - train_logreg.py: pipeline de treinamento com regressão logística, baseline interpretável.
+  - train_xgboost.py: pipeline avançado com XGBoost, foco em desempenho.
+  - evaluate.py: avaliação com métricas (ROC-AUC, PR-AUC, F1, precisão/recall), curvas e relatórios.
+  - inference.py: função de predição em tempo real, com carregamento de artefatos e pré-processamento idêntico ao treino.
+- src/utils/
+  - io.py: leitura/escrita de datasets e artefatos com caminhos padronizados.
+  - metrics.py: métricas customizadas e utilitários de limiar.
+  - config.py: configuração central de caminhos, parâmetros de treino e janelas.
+- src/pipelines/
+  - build_dataset.py: orquestra ingestão, validações, engenharia de atributos e persiste dataset final.
+  - trainandeval.py: treina modelos, salva artefatos e gera relatórios comparativos.
+- tests/
+  - testtimewindows.py: testa agregações temporais e consistência das janelas.
+  - testleakageguards.py: testa validadores para evitar data leakage.
+  - testinferencelatency.py: mede latência de inferência e verifica limites.
+- notebooks/
+  - 01_eda.ipynb: análise exploratória, distribuição de valores, taxas de fraude, sazonalidade.
+  - 02featureinspection.ipynb: importância de features, correlações, drift potencial.
+  - 03thresholdanalysis.ipynb: análise de trade-off entre precisão, recall e custo financeiro.
+- .github/workflows/
+  - ci.yaml: pipeline principal de testes e qualidade.
+  - quality.yml: lint/format/type checks.
+  - auto-fix*.yml: pipelines opcionais para correção automática.
+- Configuração:
+  - pyproject.toml: dependências, ferramentas de qualidade e configuração do projeto.
+  - requirements.txt e dev-requirements.txt: referências alternativas de dependências.
+  - setup.cfg: configurações de ferramentas (se necessário).
+  - .pre-commit-config.yaml: hooks de qualidade.
+  - .gitignore: arquivos ignorados.
+  - Makefile: comandos padronizados (ex.: build, train, eval).
+
+Como executar
+
+- Construção de dataset:
+  - poetry run python src/pipelines/build_dataset.py
+- Treino e avaliação:
+  - poetry run python src/pipelines/trainandeval.py
+- Inferência em tempo real (exemplo):
+  - poetry run python src/modeling/inference.py --input data/processed/realtimebatch.parquet --output models/reports/inferenceoutput.parquet
+
+Exemplos de execução dos notebooks
+
+- Inicie Jupyter:
+  - poetry run jupyter lab
+- 01_eda.ipynb:
+  - Carregue data/processed/dataset.parquet.
+  - Plote distribuição de valores por hora; calcule taxa de fraude por janela.
+- 02featureinspection.ipynb:
+  - Carregue artefatos do XGBoost.
+  - Extraia importâncias e compare com logística; visualize SHAP (opcional).
+- 03thresholdanalysis.ipynb:
+  - Carregue models/reports/metrics.json.
+  - Varie thresholds de 0.1 a 0.9; calcule custo esperado: custofraude × falsosnegativos + custooperacional × falsospositivos; selecione limiar ótimo.
+
+Documentação das bibliotecas
+
+- pandas, numpy: manipulação e operações numéricas.
+- polars: processamento colunar de alto desempenho, ideal para janelas temporais.
+- pyarrow: interoperabilidade e parquet/arrow.
+- scikit-learn: modelos clássicos, métricas, pipelines.
+- xgboost, lightgbm: gradient boosting eficientes.
+- joblib: serialização de artefatos.
+- matplotlib, seaborn: visualização.
+- pytest: testes automatizados.
+- black, ruff, isort, mypy: qualidade do código.
+
+---
+
+Esquema visual do repositório
+
+`
+repo: prevencaoFraudesPix
+├── Configuração
+│   ├── pyproject.toml
+│   ├── requirements.txt
+│   ├── dev-requirements.txt
+│   ├── setup.cfg
+│   └── .pre-commit-config.yaml
+├── Qualidade/CI
+│   ├── .github/workflows/ci.yaml
+│   ├── .github/workflows/quality.yml
+│   ├── .github/workflows/auto-fix.yml
+│   ├── .github/workflows/auto-fix-push.yml
+│   ├── .github/workflows/auto-fix-feature.yml
+│   └── .github/workflows/auto-fix-combined.yml
+├── Dados
+│   ├── data/raw/
+│   ├── data/interim/
+│   └── data/processed/
+├── Modelos
+│   ├── models/artifacts/
+│   └── models/reports/
+├── Código-fonte
+│   └── src/
+│       ├── data/
+│       ├── features/
+│       ├── modeling/
+│       ├── pipelines/
+│       └── utils/
+├── Testes
+│   └── tests/
+└── Notebooks
+    └── notebooks/
+`
+
+---
+
+Detalhamento dos arquivos solicitados
+
+pyproject.toml
+
+- Define nome, versão, descrição, licença.
+- Lista dependências de runtime e grupo dev (black, ruff, isort, mypy).
+- Configurações de Black, Ruff, Isort, Mypy.
+- Dica: se não for empacotar, usar package-mode = false ou poetry install --no-root.
+
+requirements.txt e dev-requirements.txt
+
+- Alternativas ao Poetry para ambientes onde pip é preferido.
+- requirements.txt: libs de produção (pandas, numpy, scikit-learn, xgboost, lightgbm, polars, pyarrow, matplotlib, seaborn, joblib, pytest).
+- dev-requirements.txt: ferramentas de qualidade (black, ruff, isort, mypy).
+
+Makefile
+
+- Targets típicos:
+  - make setup → poetry install, pre-commit install.
+  - make data → build_dataset.
+  - make train → trainandeval.
+  - make quality → black, ruff, isort, mypy.
+  - make test → pytest.
+
+src/data
+
+- simulate_transactions.py:
+  - Gera transações com campos: id, timestamp, valor, origem/destino, chave Pix, dispositivo, rótulo fraude.
+  - Controla seed, sazonalidade e padrões de comportamento suspeito.
+- schemas.py:
+  - Especifica schema com dtypes (ex.: timestamp como datetime64, valor como float).
+  - Funções para validar conformidade do dataset.
+- utils.py:
+  - Helpers de leitura/escrita e geração de amostras controladas.
+
+src/features
+
+- timewindowspolars.py:
+  - Funções de agregação por janelas: contagem/valor acumulado por 1min/5min/1h; número de destinatários únicos; frequência de transações.
+  - Implementadas em Polars para performance.
+- categorical.py:
+  - Encoding de categorias: one-hot/target encoding; normalizações.
+- validators.py:
+  - Regras anti-vazamento: impede uso de labels futuras; valida separação temporal treino/teste.
+
+src/modeling
+
+- train_logreg.py:
+  - Pipeline: load dataset, split, scale, treina regressão logística, salva artefatos e métricas.
+- train_xgboost.py:
+  - Similar ao acima; otimiza hiperparâmetros (grid/bayes opcional).
+- evaluate.py:
+  - Calcula métricas clássicas; gera relatórios e gráficos, salva em models/reports.
+- inference.py:
+  - Carrega artefatos, aplica o mesmo pré-processamento, prediz risco de fraude; otimiza latência.
+
+src/utils
+
+- io.py:
+  - API de caminho padrão; funções de load/save parquet/csv, artefatos joblib.
+- metrics.py:
+  - Métricas customizadas; funções para análise de threshold e custos.
+- config.py:
+  - Parâmetros globais (janelas, caminhos de dados, semente, limites de latência).
+
+src/pipelines
+
+- build_dataset.py:
+  - Orquestra simulador → valida schema → features → salva processed.
+- trainandeval.py:
+  - Treina modelos, compara métricas, salva artefatos e relatórios (gráficos, JSON).
+
+data/
+
+- raw/: insumos brutos (simulados).
+- interim/: dados pós-validações.
+- processed/: dataset final com features e rótulos.
+
+models/
+
+- artifacts/: .joblib/.json dos modelos e pré-processadores.
+- reports/: métricas e gráficos (.png, .json).
+
+tests/
+
+- testtimewindows.py: garante janelas corretas e sem inconsistências.
+- testleakageguards.py: verifica ausência de vazamento.
+- testinferencelatency.py: assegura latência máxima definida e estabilidade.
+
+notebooks/
+
+- 01_eda.ipynb:
+  - Explora distribuição de transações, sazonalidade, padrões de fraude.
+- 02featureinspection.ipynb:
+  - Analisa importância de features, correlação, SHAP opcional.
+- 03thresholdanalysis.ipynb:
+  - Seleciona thresholds ótimos por custo.
+
+.gitignore
+
+- Ignora ambientes, caches, dados grandes, artefatos.
+
+.github/workflows
+
+- ci.yaml:
+  - Pytest, qualidade básica e build de artefatos.
+- quality.yml:
+  - Black (check), Ruff, Isort (check), Mypy.
+- auto-fix*.yml:
+  - Pipelines auxiliares que aplicam correções automáticas (opcional).
+
+setup.cfg
+
+- Centralização de configs para ferramentas que oferecem integração via setup.cfg (se aplicável).
+
+.pre-commit-config.yaml
+
+- Hooks: Black, Ruff (com --fix), Isort.
+- Opcional: integração com Mypy e Pytest.
+
+---
+
+Exemplos práticos
+
+Construção de dataset
+
+`bash
+poetry run python src/pipelines/build_dataset.py \
+  --input data/raw/transactions.parquet \
+  --output data/processed/dataset.parquet
+`
+
+Treino e avaliação
+
+`bash
+poetry run python src/pipelines/trainandeval.py \
+  --input data/processed/dataset.parquet \
+  --models-out models/artifacts/ \
+  --reports-out models/reports/
+`
+
+Inferência
+
+`bash
+poetry run python src/modeling/inference.py \
+  --input data/processed/new_batch.parquet \
+  --model models/artifacts/xgb_model.joblib \
+  --output models/reports/inference_scores.parquet
+`
+
+Notebooks
+
+- 01_eda.ipynb:
+  - Carregue dataset: data/processed/dataset.parquet.
+  - Crie gráficos: histograma de valores, taxa de fraude por hora/dia.
+- 02featureinspection.ipynb:
+  - Importâncias: carregue xgb_model.joblib, plote features por ganho.
+- 03thresholdanalysis.ipynb:
+  - Analise métricas por threshold e calcule custo esperado; selecione limiar de decisão.
+
+---
+
+Relatórios executivos
+
+Relatório para o CEO do Nubank
+
+- Resumo estratégico:
+  - O sistema reduz perdas por fraude em Pix com decisão em tempo real, preservando experiência do cliente.
+- Benefícios:
+  - Diminuição de fraude estimada em X% com incremento Y% em precisão, mantendo latência média inferior a 50 ms por transação (meta de produção).
+  - Arquitetura replicável e audítavel, com governança de dados e qualidade de código.
+- Riscos e mitigação:
+  - Drift de dados monitorado com re-treinos periódicos e alertas.
+  - Falsos positivos manejados por thresholds dinâmicos e revisão manual em casos de alto impacto.
+- Próximos passos:
+  - Integração com sistemas de risco; AB testing; ampliação de features comportamentais e device intelligence.
+
+Relatório para o diretor financeiro
+
+- Impacto econômico:
+  - Modelo de custo: Custo total = custofraude × FN + custooperacional × FP.
+  - Otimização de limiar minimiza custo agregado, com simulações nos notebooks.
+- Resultados:
+  - ROC-AUC e PR-AUC superiores ao baseline (logística), XGBoost melhor performance.
+  - Cenários por sazonalidade e horários de pico avaliados.
+- Governança:
+  - Registros de modelos e relatórios em models/reports; versionamento por commit/tag.
+- Recomendação:
+  - Adoção do limiar 𝜏 que minimiza custo sob restrições de SLA e UX; recalibração trimestral.
+
+Relatório para o gerente financeiro
+
+- Operação:
+  - Processo diário: ingestão → features → scoring em tempo real → revisão de alertas.
+  - Monitoramento de KPIs: taxa de fraude, precisão, recall, latência, custo por transação.
+- Procedimentos:
+  - Playbook em incidentes: fallback para modelo baseline, logging detalhado e revisão de regras.
+- Treinamento e adoção:
+  - Treinamento de equipe para interpretar relatórios; canal de feedback com time de dados.
+
+---
+
+**Observações finais**
+
+- Este projeto foi desenhado para ser modular, auditável e evolutivo.
+- O ecossistema de qualidade (Ruff, Black, Isort, Mypy, Pytest, CI) reduz riscos operacionais e melhora a manutenibilidade.
+- Os notebooks complementam a transparência analítica e decisões orientadas a custos.
+
+> Repositório público e estrutura disponível no GitHub.
+
+
+
+---
+
+
+
+
+**Autor:**
+  Sergio Santos 
+
+
+---
+
+**Contato:**
+
+
+[![Portfólio Sérgio Santos](https://img.shields.io/badge/Portfólio-Sérgio_Santos-111827?style=for-the-badge&logo=githubpages&logoColor=00eaff)](https://santosdevbjj.github.io/portfolio/)
+[![LinkedIn Sérgio Santos](https://img.shields.io/badge/LinkedIn-Sérgio_Santos-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/santossergioluiz) 
+
+---
+
+
+
+
+
+
