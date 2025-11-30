@@ -19,6 +19,79 @@ seaborn = "^0.13.0"
 pytest = "^8.0.0"
 polars = "^0.20.0"
 
+[tool.poetry.group.dev.dependencies]
+black = "^24.0.0"
+ruff = "^0.6.0"
+isort = "^5.13.0"
+mypy = "^1.10.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+# ============================
+# Configuração do Black
+# ============================
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+skip-string-normalization = false
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.git
+    | \.venv
+    | build
+    | dist
+    | data
+    | models
+  )/
+)
+'''
+
+# ============================
+# Configuração do Ruff
+# ============================
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+exclude = [
+    ".git",
+    ".venv",
+    "build",
+    "dist",
+    "data",
+    "models",
+]
+# Seleção de regras (PEP8 + Pyflakes + Bugbear + isort)
+select = ["E", "F", "W", "C90", "B", "I"]
+ignore = ["E203", "W503"]  # compatível com Black
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+# ============================
+# Configuração do Isort
+# ============================
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+combine_as_imports = true
+skip = ["data", "models"]
+
+# ============================
+# Configuração do Mypy
+# ============================
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+strict_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
