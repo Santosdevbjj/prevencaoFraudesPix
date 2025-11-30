@@ -32,7 +32,7 @@ jobs:
       run: poetry run black --check src tests
 
     # ---------------------------
-    # Ruff - linting e correções
+    # Ruff - linting
     # ---------------------------
     - name: Run Ruff
       run: poetry run ruff check src tests
