@@ -9,8 +9,8 @@ jobs:
   autofix:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # necessário para commit/push
-      pull-requests: write   # necessário para comentar no PR
+      contents: write
+      pull-requests: write
 
     steps:
     - name: Checkout repository
@@ -35,14 +35,24 @@ jobs:
         poetry run ruff check src tests --fix
         poetry run isort src tests
 
+    - name: Detect changes
+      id: git-diff
+      run: |
+        if git diff --quiet; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "changed=true" >> $GITHUB_OUTPUT
+        fi
+
     - name: Commit and push changes
+      if: steps.git-diff.outputs.changed == 'true'
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: "chore: auto-fix style issues (Black + Ruff + Isort)"
         branch: ${{ github.ref_name }}
 
-    - name: Comment on PR
-      if: github.event_name == 'pull_request'
+    - name: Comment on PR (correções aplicadas)
+      if: github.event_name == 'pull_request' && steps.git-diff.outputs.changed == 'true'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: auto-fix-feature
@@ -51,3 +61,13 @@ jobs:
           - Ferramentas usadas: **Black** (formatação), **Ruff** (lint + fix), **Isort** (imports).
           - Commit gerado: `chore: auto-fix style issues (Black + Ruff + Isort)`
           - Agora o código segue o padrão definido no `pyproject.toml` e deve passar no CI.
+
+    - name: Comment on PR (nenhuma alteração)
+      if: github.event_name == 'pull_request' && steps.git-diff.outputs.changed == 'false'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: auto-fix-feature
+        message: |
+          ✅ Nenhuma alteração de estilo encontrada.
+          - O branch já estava limpo e segue o padrão definido no `pyproject.toml`.
+          - O CI deve passar sem problemas.
