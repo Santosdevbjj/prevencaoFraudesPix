@@ -4,12 +4,15 @@ import joblib
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, recall_score
 from xgboost import XGBClassifier
+from src.modeling.evaluate import evaluate # Importando a função de avaliação aprimorada
 
 def prepare(df: pd.DataFrame):
-    # Selecionar features úteis
+    """
+    Prepara o DataFrame para o treinamento, selecionando e codificando features.
+    """
+    # Lista de features numéricas e de agregação
     cols = [
         "amount",
         "sender_account_age_days",
@@ -24,37 +27,57 @@ def prepare(df: pd.DataFrame):
         "std_amount_last_30d",
         "num_unique_recipients_24h",
     ]
-    # Encoding simples do bank
+    
     df = df.copy()
+    
+    # Encoding categórico simples (One-Hot Encoding)
+    # Assumimos que 'recipient_bank' ainda está presente no dataset.parquet
     df = pd.get_dummies(df, columns=["recipient_bank"], drop_first=True)
 
-    X = df[cols + [c for c in df.columns if c.startswith("recipient_bank_")]].fillna(0)
+    # Criação final de X e y
+    X = df[
+        cols + [c for c in df.columns if c.startswith("recipient_bank_")]
+    ].fillna(0)
     y = df["is_fraud"].astype(int)
     return X, y
 
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data", type=str, default="data/processed/dataset.parquet")
-    parser.add_argument("--out_model", type=str, default="models/artifacts/model_xgb.joblib")
-    parser.add_argument("--out_report", type=str, default="models/reports/metrics_xgb.json")
+    parser.add_argument(
+        "--data", type=str, default="data/processed/dataset.parquet"
+    )
+    parser.add_argument(
+        "--out_model",
+        type=str,
+        default="models/artifacts/model_xgb.joblib",
+    )
+    parser.add_argument(
+        "--out_report",
+        type=str,
+        default="models/reports/metrics_xgb.json",
+    )
     args = parser.parse_args()
 
+    # Criação dos diretórios de saída
     Path("models/artifacts").mkdir(parents=True, exist_ok=True)
     Path("models/reports").mkdir(parents=True, exist_ok=True)
 
+    # 1. Preparação dos Dados
     df = pd.read_parquet(args.data)
     X, y = prepare(df)
 
-    # split temporal (exemplo simplificado): último 10% como teste
+    # 2. Divisão Temporal de Dados: último 10% como teste (simulação de futuro)
     n = len(df)
     cut = int(n * 0.9)
     X_train, y_train = X.iloc[:cut], y.iloc[:cut]
     X_test, y_test = X.iloc[cut:], y.iloc[cut:]
 
-    # lidar com desbalanceamento via scale_pos_weight
+    # Lidar com desbalanceamento (Taxa Negativos / Taxa Positivos)
     pos_weight = (len(y_train) - y_train.sum()) / max(y_train.sum(), 1)
 
+    # 3. Treinamento do Modelo
     model = XGBClassifier(
         n_estimators=300,
         max_depth=6,
@@ -66,29 +89,42 @@ if __name__ == "__main__":
         random_state=42,
         n_jobs=-1,
         tree_method="hist",
-        scale_pos_weight=pos_weight
+        scale_pos_weight=pos_weight, # Tratamento de desbalanceamento
     )
 
+    print("Iniciando treinamento do XGBoost...")
     model.fit(X_train, y_train)
-    proba = model.predict_proba(X_test)[:, 1]
 
+    # 4. Avaliação e Otimização do Threshold
+    proba = model.predict_proba(X_test)[:, 1]
     auc = roc_auc_score(y_test, proba)
 
-    # escolher threshold visando recall alto com FPR baixo (exemplo: varrer thresholds)
+    # Busca o melhor threshold (Trade-off entre Recall e FPR)
     thresholds = np.linspace(0.5, 0.99, 20)
-    best = {"threshold": None, "recall": 0, "fpr": 1, "auc": auc}
-    y_true = y_test.values
+    best_metrics = {"threshold": 0.0, "recall": 0.0, "fpr": 1.0, "auc": float(auc)}
+    
     for t in thresholds:
-        y_pred = (proba >= t).astype(int)
-        recall = recall_score(y_true, y_pred)
-        fp = ((y_pred == 1) & (y_true == 0)).sum()
-        tn = ((y_pred == 0) & (y_true == 0)).sum()
-        fpr = fp / max(fp + tn, 1)
-        if recall >= best["recall"] and fpr <= best["fpr"]:
-            best.update({"threshold": float(t), "recall": float(recall), "fpr": float(fpr), "auc": float(auc)})
+        metrics = evaluate(model, X_test, y_test, threshold=t)
+        
+        # Otimiza o threshold: prioriza Recall mais alto, depois o menor FPR
+        if metrics["recall"] >= best_metrics["recall"] and metrics["fpr"] <= best_metrics["fpr"]:
+            best_metrics.update({
+                "threshold": metrics["threshold"], 
+                "recall": metrics["recall"], 
+                "fpr": metrics["fpr"],
+                "auc": metrics["auc"],
+            })
 
+    # 5. Salvamento dos Artefatos
     joblib.dump(model, args.out_model)
     with open(args.out_report, "w") as f:
-        json.dump(best, f, indent=2)
+        # Garante que os valores numéricos sejam floats nativos para JSON
+        json.dump({k: float(v) if isinstance(v, (np.float64, np.float32)) else v 
+                   for k, v in best_metrics.items()}, f, indent=2)
 
-    print(f"AUC: {auc:.4f} | Best threshold: {best['threshold']} | Recall: {best['recall']:.3f} | FPR: {best['fpr']:.4f}")
+    print("\n✨ Treinamento Concluído!")
+    print(f"  - AUC: {best_metrics['auc']:.4f}")
+    print(f"  - Best Threshold: {best_metrics['threshold']:.4f}")
+    print(f"  - Melhor Recall: {best_metrics['recall']:.3f}")
+    print(f"  - FPR (Bloqueios Incorretos): {best_metrics['fpr']:.4f}")
+    print(f"Modelo salvo em: {args.out_model}")
