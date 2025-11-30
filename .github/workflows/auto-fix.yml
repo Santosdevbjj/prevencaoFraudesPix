@@ -8,8 +8,8 @@ jobs:
   autofix:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # necessário para fazer commit/push
-      pull-requests: write
+      contents: write   # necessário para commit/push
+      pull-requests: write   # necessário para comentar no PR
 
     steps:
     - name: Checkout repository
@@ -37,3 +37,13 @@ jobs:
       with:
         commit_message: "chore: auto-fix style issues (Black + Ruff)"
         branch: ${{ github.head_ref }}
+
+    - name: Comment on PR
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: auto-fix
+        message: |
+          ✅ Correções automáticas de estilo foram aplicadas neste PR.
+          - Ferramentas usadas: **Ruff** (lint + fix) e **Black** (formatação).
+          - Commit gerado: `chore: auto-fix style issues (Black + Ruff)`
+          - Agora o código segue o padrão PEP8 e deve passar no CI.
