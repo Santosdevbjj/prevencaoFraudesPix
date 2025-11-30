@@ -1,10 +1,10 @@
-import pandas as pd
 import argparse
 from pathlib import Path
+# Removido: import pandas as pd (Não é usado diretamente neste script)
 
 # Importação dos módulos do projeto
 from src.data.simulate_transactions import simulate
-from src.features.time_windows import features_time_based
+from src.features.time_windows import features_time_based # Mantido, assumindo que usa Pandas/Polars internamente
 from src.features.categorical import encode_categorical
 from src.utils.io import write_parquet
 
