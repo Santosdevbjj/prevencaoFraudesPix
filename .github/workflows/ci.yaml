@@ -1,4 +1,4 @@
-name: CI
+name: CI (Integração Contínua)
 
 on:
   push:
@@ -11,24 +11,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - name: 📦 Checkout repository
+      # Versão v4 é a mais estável e recente
+      uses: actions/checkout@v4 
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: 🐍 Set up Python 3.12
+      # Usando a versão mais recente da action (v5)
+      uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
-    - name: Install dependencies
+    - name: ⚙️ Install all dependencies (including linters and tests)
+      # Instala todas as dependências do requirements.txt em um só passo
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-
-    - name: Lint with flake8
+    
+    # ----------------------------------------------------
+    # Passo 1: LINTING (Verificação de Estilo/Qualidade)
+    # ----------------------------------------------------
+    - name: 🧹 Lint with flake8
       run: |
-        pip install flake8
+        # flake8 já deve estar instalado via requirements.txt
         flake8 src tests
 
-    - name: Run tests
+    # ----------------------------------------------------
+    # Passo 2: TESTES UNITÁRIOS E DE INTEGRAÇÃO
+    # ----------------------------------------------------
+    - name: ✅ Run PyTest
+      # -q para saída mais concisa
       run: |
         pytest -q
