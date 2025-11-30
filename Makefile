@@ -1,4 +1,4 @@
-.PHONY: format setup clean simulate features train test lint quality all
+.PHONY: format setup clean simulate features train test lint quality fix all
 
 # ==============================================================================
 # QUALIDADE E MANUTENÇÃO
@@ -7,6 +7,14 @@ format:
 	poetry run black src tests
 	@echo "Código formatado com sucesso! (Black)"
 
+lint:
+	poetry run ruff check .
+
+fix:
+	poetry run ruff check src tests --fix
+	poetry run black src tests
+	@echo "✅ Correções automáticas aplicadas (Ruff + Black)"
+
 setup:
 	poetry install
 
@@ -14,9 +22,6 @@ clean:
 	@echo "Limpando artefatos gerados (datasets e modelos)..."
 	rm -rf data/processed/*
 	rm -rf models/artifacts/*
-
-lint:
-	poetry run ruff check .
 
 # Target de Orquestração de Qualidade
 # Garante que a formatação é executada antes do lint e dos testes.
