@@ -203,7 +203,7 @@ prevencaoFraudesPix/
     └── auto-fix-combined.yml
 `
 
-
+ 
 ---
 
 **Explicação das pastas e arquivos**
