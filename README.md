@@ -130,16 +130,20 @@ A organização segue práticas de Data Science, com qualidade garantida por CI,
 **1. Clone o repositório:**
    - git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
    - cd prevencaoFraudesPix
+     
 **2. Instale dependências:**
    - poetry install
+     
 **3. Qualidade:**
    - poetry run black src tests
    - poetry run ruff check src tests --fix
    - poetry run isort src tests
    - poetry run mypy src
+     
 **4. Pipelines:**
    - poetry run python src/pipelines/build_dataset.py
    - poetry run python src/pipelines/trainandeval.py
+
 **5. Notebooks:**
    - poetry run jupyter lab
    - Abra notebooks/01eda.ipynb, 02featureinspection.ipynb, 03threshold_analysis.ipynb.
