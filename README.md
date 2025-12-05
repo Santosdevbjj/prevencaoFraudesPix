@@ -90,14 +90,14 @@ Este projeto implementa um pipeline completo para simulação de transações, e
 **Tecnologias utilizadas**
 
 - Linguagem: Python 3.12.
-- Ciência de Dados:
+- **Ciência de Dados:**
   - Pandas, Polars, NumPy, PyArrow.
   - Scikit-learn, XGBoost, LightGBM.
   - Matplotlib, Seaborn para visualização.
-- Qualidade:
+- **Qualidade:**
   - Black (formatação), Ruff (lint), Isort (imports), Mypy (tipos).
   - Pytest (testes).
-- DevOps:
+- **DevOps:**
   - GitHub Actions (CI), pre-commit, Makefile, Poetry.
 
 **Requisitos**
