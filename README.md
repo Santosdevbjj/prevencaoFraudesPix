@@ -247,7 +247,7 @@ prevencaoFraudesPix/
   - **ci.yaml:** pipeline principal de testes e qualidade.
   - **quality.yml:** lint/format/type checks.
   - **auto-fix*.yml:** pipelines opcionais para correção automática.
-- Configuração:
+- **Configuração:**
   - **pyproject.toml:** dependências, ferramentas de qualidade e configuração do projeto.
   - **requirements.txt** e dev-requirements.txt: referências alternativas de dependências.
   - **setup.cfg:** configurações de ferramentas (se necessário).
