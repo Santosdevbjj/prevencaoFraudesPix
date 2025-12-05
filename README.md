@@ -46,6 +46,9 @@ Este guia entrega a documentação completa e profissional do projeto **“Preve
   - Make (GNU Make) para comandos padronizados.
   - JupyterLab/Notebook para exploração.
 
+
+---
+
 **Instalação**
 
 1. Instale Python 3.12 e pip.
@@ -59,6 +62,9 @@ Este guia entrega a documentação completa e profissional do projeto **“Preve
    - poetry install (ou poetry install --no-root se não for empacotar o projeto)
 5. Instale pre-commit e ative hooks:
    - poetry run pre-commit install
+
+
+---
 
 **Execução de qualidade local**
 
@@ -87,6 +93,9 @@ Este guia entrega a documentação completa e profissional do projeto **“Preve
 
 Este projeto implementa um pipeline completo para simulação de transações, engenharia de atributos, treinamento de modelos (logística e XGBoost), avaliação e inferência em tempo real. A organização segue práticas de Data Science profissional, com qualidade garantida por CI, testes e linters.
 
+---
+
+
 **Tecnologias utilizadas**
 
 - Linguagem: Python 3.12.
@@ -99,6 +108,9 @@ Este projeto implementa um pipeline completo para simulação de transações, e
   - Pytest (testes).
 - **DevOps:**
   - GitHub Actions (CI), pre-commit, Makefile, Poetry.
+ 
+---
+
 
 **Requisitos**
 
@@ -108,28 +120,34 @@ Este projeto implementa um pipeline completo para simulação de transações, e
   - Python 3.12, Poetry 1.7+, Git, Make.
   - JupyterLab para notebooks.
 
+
+---
+
 **Instalação e execução**
 
-1. Clone o repositório:
+**1. Clone o repositório:**
    - git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
    - cd prevencaoFraudesPix
-2. Instale dependências:
+**2. Instale dependências:**
    - poetry install
-3. Qualidade:
+**3. Qualidade:**
    - poetry run black src tests
    - poetry run ruff check src tests --fix
    - poetry run isort src tests
    - poetry run mypy src
-4. Pipelines:
+**4. Pipelines:**
    - poetry run python src/pipelines/build_dataset.py
    - poetry run python src/pipelines/trainandeval.py
-5. Notebooks:
+**5. Notebooks:**
    - poetry run jupyter lab
    - Abra notebooks/01eda.ipynb, 02featureinspection.ipynb, 03threshold_analysis.ipynb.
 
+
+---
+
 **Estrutura do repositório**
 
-`
+
 prevencaoFraudesPix/
 ├── README.md
 ├── LICENSE
@@ -185,6 +203,9 @@ prevencaoFraudesPix/
     └── auto-fix-combined.yml
 `
 
+
+---
+
 **Explicação das pastas e arquivos**
 
 - data/
@@ -234,6 +255,9 @@ prevencaoFraudesPix/
   - .gitignore: arquivos ignorados.
   - Makefile: comandos padronizados (ex.: build, train, eval).
 
+
+---
+
 **Como executar**
 
 - Construção de dataset:
@@ -242,6 +266,9 @@ prevencaoFraudesPix/
   - poetry run python src/pipelines/trainandeval.py
 - Inferência em tempo real (exemplo):
   - poetry run python src/modeling/inference.py --input data/processed/realtimebatch.parquet --output models/reports/inferenceoutput.parquet
+
+
+---
 
 **Exemplos de execução dos notebooks**
 
@@ -256,6 +283,8 @@ prevencaoFraudesPix/
 - 03thresholdanalysis.ipynb:
   - Carregue models/reports/metrics.json.
   - Varie thresholds de 0.1 a 0.9; calcule custo esperado: custofraude × falsosnegativos + custooperacional × falsospositivos; selecione limiar ótimo.
+
+---
 
 **Documentação das bibliotecas**
 
@@ -273,7 +302,7 @@ prevencaoFraudesPix/
 
 **Esquema visual do repositório**
 
-`
+
 repo: prevencaoFraudesPix
 ├── Configuração
 │   ├── pyproject.toml
