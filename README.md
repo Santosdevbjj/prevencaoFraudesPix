@@ -208,63 +208,63 @@ prevencaoFraudesPix/
 
 **Explicação das pastas e arquivos**
 
-- data/
-  - raw/: dados brutos simulados ou provenientes de logs.
-  - interim/: dados intermediários após limpeza/validações.
-  - processed/: dataset final com features para treino/inferência.
-- models/
-  - artifacts/: modelos treinados, encoders e escalers salvos.
-  - reports/: relatórios de métricas, curvas ROC/PR, confusion matrices.
-- src/data/
-  - simulate_transactions.py: gera transações Pix sintéticas com rótulos de fraude, distribuição de valores e padrões temporais.
-  - schemas.py: esquemas de colunas (tipos, obrigatoriedade) para garantir consistência.
-  - utils.py: utilidades de ingestão, validação básica e seed control.
-- src/features/
-  - timewindowspolars.py: agregações em janelas de tempo (ex.: contagem por minuto, soma de valores por hora) usando Polars para alta performance.
-  - categorical.py: encoding/normalização de variáveis categóricas (ex.: tipo de chave Pix, dispositivo).
-  - validators.py: guardrails de vazamento e sanidade (ex.: impedir uso de labels futuras).
-- src/modeling/
-  - train_logreg.py: pipeline de treinamento com regressão logística, baseline interpretável.
-  - train_xgboost.py: pipeline avançado com XGBoost, foco em desempenho.
-  - evaluate.py: avaliação com métricas (ROC-AUC, PR-AUC, F1, precisão/recall), curvas e relatórios.
-  - inference.py: função de predição em tempo real, com carregamento de artefatos e pré-processamento idêntico ao treino.
-- src/utils/
-  - io.py: leitura/escrita de datasets e artefatos com caminhos padronizados.
-  - metrics.py: métricas customizadas e utilitários de limiar.
-  - config.py: configuração central de caminhos, parâmetros de treino e janelas.
-- src/pipelines/
-  - build_dataset.py: orquestra ingestão, validações, engenharia de atributos e persiste dataset final.
-  - trainandeval.py: treina modelos, salva artefatos e gera relatórios comparativos.
-- tests/
-  - testtimewindows.py: testa agregações temporais e consistência das janelas.
-  - testleakageguards.py: testa validadores para evitar data leakage.
-  - testinferencelatency.py: mede latência de inferência e verifica limites.
-- notebooks/
-  - 01_eda.ipynb: análise exploratória, distribuição de valores, taxas de fraude, sazonalidade.
-  - 02featureinspection.ipynb: importância de features, correlações, drift potencial.
-  - 03thresholdanalysis.ipynb: análise de trade-off entre precisão, recall e custo financeiro.
-- .github/workflows/
-  - ci.yaml: pipeline principal de testes e qualidade.
-  - quality.yml: lint/format/type checks.
-  - auto-fix*.yml: pipelines opcionais para correção automática.
+- **data/**
+  - **raw/:** dados brutos simulados ou provenientes de logs.
+  - **interim/:** dados intermediários após limpeza/validações.
+  - **processed/:** dataset final com features para treino/inferência.
+- **models/**
+  - **artifacts/:** modelos treinados, encoders e escalers salvos.
+  - **reports/:** relatórios de métricas, curvas ROC/PR, confusion matrices.
+- **src/data/**
+  - **simulate_transactions.py:** gera transações Pix sintéticas com rótulos de fraude, distribuição de valores e padrões temporais.
+  - **schemas.py:** esquemas de colunas (tipos, obrigatoriedade) para garantir consistência.
+  - **utils.py:** utilidades de ingestão, validação básica e seed control.
+- **src/features/**
+  - **timewindowspolars.py:** agregações em janelas de tempo (ex.: contagem por minuto, soma de valores por hora) usando Polars para alta performance.
+  - **categorical.py:** encoding/normalização de variáveis categóricas (ex.: tipo de chave Pix, dispositivo).
+  - **validators.py:** guardrails de vazamento e sanidade (ex.: impedir uso de labels futuras).
+- **src/modeling/**
+  - **train_logreg.py:** pipeline de treinamento com regressão logística, baseline interpretável.
+  - **train_xgboost.py:** pipeline avançado com XGBoost, foco em desempenho.
+  - **evaluate.py:** avaliação com métricas (ROC-AUC, PR-AUC, F1, precisão/recall), curvas e relatórios.
+  - **inference.py:** função de predição em tempo real, com carregamento de artefatos e pré-processamento idêntico ao treino.
+- **src/utils/**
+  - **io.py:** leitura/escrita de datasets e artefatos com caminhos padronizados.
+  - **metrics.py:** métricas customizadas e utilitários de limiar.
+  - **config.py:** configuração central de caminhos, parâmetros de treino e janelas.
+- **src/pipelines/**
+  - **build_dataset.py:** orquestra ingestão, validações, engenharia de atributos e persiste dataset final.
+  - **trainandeval.py:** treina modelos, salva artefatos e gera relatórios comparativos.
+- **tests/**
+  - **testtimewindows.py:** testa agregações temporais e consistência das janelas.
+  - **testleakageguards.py:** testa validadores para evitar data leakage.
+  - **testinferencelatency.py:** mede latência de inferência e verifica limites.
+- **notebooks/**
+  - **01_eda.ipynb:** análise exploratória, distribuição de valores, taxas de fraude, sazonalidade.
+  - **02featureinspection.ipynb:** importância de features, correlações, drift potencial.
+  - **03thresholdanalysis.ipynb:** análise de trade-off entre precisão, recall e custo financeiro.
+- **.github/workflows/**
+  - **ci.yaml:** pipeline principal de testes e qualidade.
+  - **quality.yml:** lint/format/type checks.
+  - **auto-fix*.yml:** pipelines opcionais para correção automática.
 - Configuração:
-  - pyproject.toml: dependências, ferramentas de qualidade e configuração do projeto.
-  - requirements.txt e dev-requirements.txt: referências alternativas de dependências.
-  - setup.cfg: configurações de ferramentas (se necessário).
-  - .pre-commit-config.yaml: hooks de qualidade.
-  - .gitignore: arquivos ignorados.
-  - Makefile: comandos padronizados (ex.: build, train, eval).
+  - **pyproject.toml:** dependências, ferramentas de qualidade e configuração do projeto.
+  - **requirements.txt** e dev-requirements.txt: referências alternativas de dependências.
+  - **setup.cfg:** configurações de ferramentas (se necessário).
+  - **.pre-commit-config.yaml:** hooks de qualidade.
+  - **.gitignore:** arquivos ignorados.
+  - **Makefile:** comandos padronizados (ex.: build, train, eval).
 
 
 ---
 
 **Como executar**
 
-- Construção de dataset:
+- **Construção de dataset:**
   - poetry run python src/pipelines/build_dataset.py
-- Treino e avaliação:
+- **Treino e avaliação:**
   - poetry run python src/pipelines/trainandeval.py
-- Inferência em tempo real (exemplo):
+- **Inferência em tempo real (exemplo):**
   - poetry run python src/modeling/inference.py --input data/processed/realtimebatch.parquet --output models/reports/inferenceoutput.parquet
 
 
@@ -272,15 +272,15 @@ prevencaoFraudesPix/
 
 **Exemplos de execução dos notebooks**
 
-- Inicie Jupyter:
+- **Inicie Jupyter:**
   - poetry run jupyter lab
-- 01_eda.ipynb:
+- **01_eda.ipynb:**
   - Carregue data/processed/dataset.parquet.
   - Plote distribuição de valores por hora; calcule taxa de fraude por janela.
-- 02featureinspection.ipynb:
+- **02featureinspection.ipynb:**
   - Carregue artefatos do XGBoost.
-  - Extraia importâncias e compare com logística; visualize SHAP (opcional).
-- 03thresholdanalysis.ipynb:
+  - Extraia importâncias e compare com logística; **visualize SHAP.**
+- **03thresholdanalysis.ipynb:**
   - Carregue models/reports/metrics.json.
   - Varie thresholds de 0.1 a 0.9; calcule custo esperado: custofraude × falsosnegativos + custooperacional × falsospositivos; selecione limiar ótimo.
 
@@ -288,15 +288,15 @@ prevencaoFraudesPix/
 
 **Documentação das bibliotecas**
 
-- pandas, numpy: manipulação e operações numéricas.
-- polars: processamento colunar de alto desempenho, ideal para janelas temporais.
-- pyarrow: interoperabilidade e parquet/arrow.
-- scikit-learn: modelos clássicos, métricas, pipelines.
-- xgboost, lightgbm: gradient boosting eficientes.
-- joblib: serialização de artefatos.
-- matplotlib, seaborn: visualização.
-- pytest: testes automatizados.
-- black, ruff, isort, mypy: qualidade do código.
+- **pandas, numpy:** manipulação e operações numéricas.
+- **polars:** processamento colunar de alto desempenho, ideal para janelas temporais.
+- **pyarrow:** interoperabilidade e parquet/arrow.
+- **scikit-learn:** modelos clássicos, métricas, pipelines.
+- **xgboost, lightgbm:** gradient boosting eficientes.
+- **joblib:** serialização de artefatos.
+- **matplotlib, seaborn:** visualização.
+- **pytest:** testes automatizados.
+- **black, ruff, isort, mypy:** qualidade do código.
 
 ---
 
