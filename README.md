@@ -51,16 +51,16 @@ Este guia entrega a documentação completa e profissional do projeto **“Preve
 
 **Instalação**
 
-1. Instale Python 3.12 e pip.
-2. Instale Poetry:
+**1. Instale Python 3.12 e pip.**
+**2. Instale Poetry:**
    - Linux/macOS: curl -sSL https://install.python-poetry.org | python3 -
    - Windows: via installer oficial do Poetry.
-3. Clone o repositório:
+**3. Clone o repositório:**
    - git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
    - cd prevencaoFraudesPix
-4. Crie e ative o ambiente:
+**4. Crie e ative o ambiente:**
    - poetry install (ou poetry install --no-root se não for empacotar o projeto)
-5. Instale pre-commit e ative hooks:
+**5. Instale pre-commit e ative hooks:**
    - poetry run pre-commit install
 
 
@@ -68,11 +68,11 @@ Este guia entrega a documentação completa e profissional do projeto **“Preve
 
 **Execução de qualidade local**
 
-- Formatação e lint:
+- **Formatação e lint:**
   - poetry run black src tests
   - poetry run ruff check src tests --fix
   - poetry run isort src tests
-- Tipos:
+- **Tipos:**
   - poetry run mypy src
 
 **Execução de pipelines**
@@ -91,7 +91,9 @@ Este guia entrega a documentação completa e profissional do projeto **“Preve
 
 **Descrição**
 
-Este projeto implementa um pipeline completo para simulação de transações, engenharia de atributos, treinamento de modelos (logística e XGBoost), avaliação e inferência em tempo real. A organização segue práticas de Data Science profissional, com qualidade garantida por CI, testes e linters.
+Este projeto implementa um pipeline completo para simulação de transações, engenharia de atributos, treinamento de modelos (logística e XGBoost), avaliação e inferência em tempo real. 
+
+A organização segue práticas de Data Science, com qualidade garantida por CI, testes e linters.
 
 ---
 
@@ -143,65 +145,15 @@ Este projeto implementa um pipeline completo para simulação de transações, e
    - Abra notebooks/01eda.ipynb, 02featureinspection.ipynb, 03threshold_analysis.ipynb.
 
 
----
+--- 
 
 **Estrutura do repositório**
 
 
-prevencaoFraudesPix/
-├── README.md
-├── LICENSE
-├── .gitignore
-├── pyproject.toml
-├── requirements.txt
-├── dev-requirements.txt
-├── setup.cfg
-├── Makefile
-├── .pre-commit-config.yaml
-├── data/
-│   ├── raw/
-│   ├── interim/
-│   └── processed/
-├── models/
-│   ├── artifacts/
-│   └── reports/
-├── src/
-│   ├── data/
-│   │   ├── simulate_transactions.py
-│   │   ├── schemas.py
-│   │   └── utils.py
-│   ├── features/
-│   │   ├── timewindowspolars.py
-│   │   ├── categorical.py
-│   │   └── validators.py
-│   ├── modeling/
-│   │   ├── train_logreg.py
-│   │   ├── train_xgboost.py
-│   │   ├── evaluate.py
-│   │   └── inference.py
-│   ├── pipelines/
-│   │   ├── build_dataset.py
-│   │   └── trainandeval.py
-│   └── utils/
-│       ├── io.py
-│       ├── metrics.py
-│       └── config.py
-├── tests/
-│   ├── testtimewindows.py
-│   ├── testleakageguards.py
-│   └── testinferencelatency.py
-├── notebooks/
-│   ├── 01_eda.ipynb
-│   ├── 02featureinspection.ipynb
-│   └── 03thresholdanalysis.ipynb
-└── .github/workflows/
-    ├── ci.yaml
-    ├── quality.yml
-    ├── auto-fix.yml
-    ├── auto-fix-push.yml
-    ├── auto-fix-feature.yml
-    └── auto-fix-combined.yml
-`
+<img width="877" height="1270" alt="Screenshot_20251205-192939" src="https://github.com/user-attachments/assets/4c653f2c-4860-4093-88e9-39669e263aae" />
+<img width="849" height="1134" alt="Screenshot_20251205-193104" src="https://github.com/user-attachments/assets/59ca820c-f2e4-44c5-bded-c49f4b483868" />
+
+
 
  
 ---
@@ -298,48 +250,11 @@ prevencaoFraudesPix/
 - **pytest:** testes automatizados.
 - **black, ruff, isort, mypy:** qualidade do código.
 
----
 
-**Esquema visual do repositório**
-
-
-repo: prevencaoFraudesPix
-├── Configuração
-│   ├── pyproject.toml
-│   ├── requirements.txt
-│   ├── dev-requirements.txt
-│   ├── setup.cfg
-│   └── .pre-commit-config.yaml
-├── Qualidade/CI
-│   ├── .github/workflows/ci.yaml
-│   ├── .github/workflows/quality.yml
-│   ├── .github/workflows/auto-fix.yml
-│   ├── .github/workflows/auto-fix-push.yml
-│   ├── .github/workflows/auto-fix-feature.yml
-│   └── .github/workflows/auto-fix-combined.yml
-├── Dados
-│   ├── data/raw/
-│   ├── data/interim/
-│   └── data/processed/
-├── Modelos
-│   ├── models/artifacts/
-│   └── models/reports/
-├── Código-fonte
-│   └── src/
-│       ├── data/
-│       ├── features/
-│       ├── modeling/
-│       ├── pipelines/
-│       └── utils/
-├── Testes
-│   └── tests/
-└── Notebooks
-    └── notebooks/
-`
 
 ---
 
-**Detalhamento dos arquivos solicitados**
+**Detalhamento dos arquivos:**
 
 **pyproject.toml**
 
