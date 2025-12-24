@@ -7,30 +7,193 @@
 
 ---
 
-**Visão geral do projeto de prevenção de fraudes em Pix**
+**Visão Geral**
 
-Este guia entrega a documentação completa e profissional do projeto **“Prevenção de Fraudes em Pix”, com foco em Ciência de Dados**, modelagem, implantação de pipelines e governança de qualidade. O repositório base está publicado no GitHub.
+Este projeto implementa um sistema de detecção de fraudes em transações Pix em tempo real, utilizando pipelines de ciência de dados, modelos de machine learning e boas práticas de engenharia de software.
 
----
-
-**Objetivos do sistema**
-
-- Detectar transações suspeitas de fraude em Pix em tempo real.
-- Minimizar falsos positivos sem perder sensibilidade a fraudes.
-- Suportar operação com latência baixa, com métricas de qualidade monitoradas e reprodutibilidade via pipelines e testes.
+O objetivo é prevenir perdas financeiras e melhorar a experiência do cliente, oferecendo decisões rápidas com baixa latência, mantendo alta precisão e reprodutibilidade.
 
 ---
 
-**Escopo e entregáveis**
+**Motivação**
 
-- Estrutura de projeto padronizada (src/data, src/features, src/modeling, src/pipelines, notebooks, tests).
-- Pipelines para simulação de dados, construção de dataset, treinamento, avaliação e inferência.
-- Linting e formatação com Ruff, Black, Isort; tipos com Mypy; CI no GitHub Actions; pre-commit.
-- Relatórios executivos e financeiros para tomada de decisão.
+Criei este projeto para aplicar conhecimento em ciência de dados, engenharia de dados e machine learning em um problema real de fintechs e bancos digitais: fraudes em pagamentos instantâneos.
 
-> Repositório: Santosdevbjj/prevencaoFraudesPix
+Minha intenção foi:
+
+• Simular cenários de transações reais, incluindo padrões suspeitos;
+
+• Construir pipelines escaláveis e auditáveis;
+
+• Aplicar modelos interpretáveis (logística) e de alto desempenho (XGBoost/LightGBM);
+
+• Garantir governança de dados, qualidade de código e métricas de negócio.
+
 
 ---
+
+**Problema que Resolve**
+
+Fraudes em Pix podem gerar perdas milionárias e prejudicar a confiança do cliente. O desafio é:
+
+• Detectar fraudes em tempo real;
+
+• Minimizar falsos positivos que impactam a experiência do usuário;
+
+• Otimizar custo financeiro agregado, considerando custo de fraude e operação;
+
+• Manter alta performance e monitoramento contínuo.
+
+
+---
+
+**Decisões Técnicas**
+
+Escolhas estratégicas no projeto:
+Componente
+Escolha
+Motivação
+Linguagem
+Python 3.12
+Popular, ecossistema de ML e ciência de dados maduro
+Processamento
+Polars, Pandas, NumPy, PyArrow
+Agregações de alto desempenho e interoperabilidade
+Modelos
+Regressão Logística & XGBoost
+Baseline interpretável e performance avançada
+Testes e qualidade
+Pytest, Black, Ruff, Isort, Mypy
+Garantir confiabilidade e manutenção sustentável
+Versionamento
+GitHub + Actions
+CI/CD, automação e controle de artefatos
+Pipelines
+Scripts modulados + Makefile
+Reprodutibilidade e padronização de execução
+
+
+**Trade-offs:**
+
+• Optei por Polars para performance em janelas temporais, embora Pandas seja mais comum;
+
+• Mantive regressão logística para interpretabilidade antes de aplicar modelos complexos;
+
+• Scripts detalhados foram priorizados em modularidade, mesmo aumentando a quantidade de arquivos.
+
+
+---
+
+**Tecnologias Utilizadas**
+
+• Ciência de Dados: Pandas, Polars, NumPy, PyArrow, Scikit-learn, XGBoost, LightGBM, Matplotlib, Seaborn
+
+• Qualidade: Black, Ruff, Isort, Mypy, Pytest
+
+• DevOps/Infra: Git, GitHub Actions, Poetry, pre-commit, Makefile
+
+• Ambiente: Python 3.12, JupyterLab/Notebook
+
+---
+
+**Como Executar**
+
+**Pré-requisitos*"
+
+• CPU 4+ núcleos, 16GB RAM, SSD recomendado
+
+• Python 3.12, Poetry 1.7+, Git, Make
+
+• JupyterLab para notebooks
+
+**Passos**
+
+**1. Clone o repositório**
+
+   ```
+   git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
+cd prevencaoFraudesPix
+```
+
+
+**2.Instale dependências e pre-commit**
+
+```
+poetry install
+poetry run pre-commit install
+```
+
+
+**3. Qualidade do código**
+
+```
+poetry run black src tests
+poetry run ruff check src tests --fix
+poetry run isort src tests
+poetry run mypy src
+```
+
+**4. Execução de pipelines**
+
+```
+poetry run python src/pipelines/build_dataset.py
+poetry run python src/pipelines/trainandeval.py
+poetry run python src/modeling/inference.py --input data/processed/realtimebatch.parquet --output models/reports/inferenceoutput.parquet
+```
+
+**5. Notebooks**
+
+```
+poetry run jupyter lab
+# 01_eda.ipynb, 02featureinspection.ipynb, 03thresholdanalysis.ipynb
+```
+
+---
+
+**Principais Aprendizados**
+
+• Importância de separar regras de negócio, pipelines e modelos;
+
+• Uso de Polars e PyArrow aumentou performance em janelas temporais;
+
+• Gerenciamento de thresholds dinâmicos e métricas de custo foi essencial para decisões financeiras;
+
+• Pipelines modularizadas e CI/CD reduzem risco operacional e facilitam manutenção;
+
+• Experiência prática em detecção de fraude real-time, métricas de latência e trade-offs de precisão/recall.
+
+---
+
+
+**Próximos Passos**
+
+• Integração com sistemas de risco e device intelligence;
+
+• Automatizar re-treino baseado em drift de dados;
+
+• Expandir cobertura de testes e refatorar pipelines para microservices;
+
+• Explorar novos modelos interpretáveis para auditoria regulatória.
+
+
+---
+
+**Impacto de Negócio**
+
+• Redução de perdas por fraude: detecção em tempo real com ROC-AUC e PR-AUC superiores ao baseline;
+
+• Latência média: <50 ms por transação, mantendo UX;
+
+• Custo otimizado: minimização de custo total = custofraude × FN + custooperacional × FP;
+
+• Governança e auditabilidade: versionamento de modelos, artefatos e relatórios.
+
+
+
+
+---
+---
+
 
 **Passo a passo para criar e executar o projeto**
 
@@ -421,11 +584,33 @@ poetry run python src/modeling/inference.py \
 ---
 
 
+​🧠 **Aprendizados e Desafios Técnicos**
+
+​O desenvolvimento deste sistema trouxe desafios que foram além da modelagem preditiva, exigindo uma mentalidade de Engenharia de Machine Learning (MLOps):
+
+• **​Performance vs. Latência:** O maior desafio técnico foi garantir que o cálculo de janelas temporais (contagem de transações no último minuto/hora) fosse performático.
+
+A substituição do processamento linha a linha por agregações vetorizadas no Polars foi a decisão chave para manter a latência de inferência dentro dos limites aceitáveis para o Pix.
+
+• **​Prevenção de Data Leakage:** Em dados temporais, é fácil cometer o erro de usar informações do futuro para treinar o modelo. Implementei validadores rigorosos (validators.py) para garantir que as janelas de agregação e o split treino/teste respeitassem estritamente a linha do tempo.
+
+• **​Trade-off Financeiro:** Aprendi que a melhor métrica de Machine Learning (como um AUC alto) nem sempre é a melhor métrica de negócio. 
+
+• O uso do **Threshold Analysis** me permitiu entender que, em fraudes, o custo de um Falso Negativo (deixar a fraude passar) é muito superior ao de um Falso Positivo (bloqueio indevido), e calibrei o modelo para minimizar o prejuízo financeiro total, não apenas o erro estatístico.
+
+• **​Qualidade de Software em Dados:** A implementação de **Type Hinting (Mypy) e Linting (Ruff)** em um pipeline de Data Science foi fundamental para evitar bugs em tempo de execução, demonstrando que código de cientista de dados também deve ser código de produção.
+
+
+
+
+---
+
+
 
 ## Relatórios executivos
 
 
-**Relatório para o CEO do Nubank**
+**Relatório para o CEO**
 
 - **Resumo estratégico:**
   - O sistema reduz perdas por fraude em Pix com decisão em tempo real, preservando experiência do cliente.
