@@ -71,6 +71,12 @@ CI/CD, automação e controle de artefatos
 Pipelines
 Scripts modulados + Makefile
 Reprodutibilidade e padronização de execução
+Se você quiser, posso
+
+
+
+
+---
 
 
 **Trade-offs:**
