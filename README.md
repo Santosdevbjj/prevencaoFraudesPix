@@ -1,4 +1,4 @@
-# Sistema de Prevenção de Fraudes em Pix  em Tempo Real 
+# Sistema de Prevenção de Fraudes em Pix  em Tempo Real  
 
 
 <img width="1080" height="670" alt="CienciaDadosPix" src="https://github.com/user-attachments/assets/f3ae5290-64d6-4e21-909e-152e4092b308" />
