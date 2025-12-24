@@ -47,31 +47,22 @@ Fraudes em Pix podem gerar perdas milionárias e prejudicar a confiança do clie
 
 ---
 
-**Decisões Técnicas**
 
-Escolhas estratégicas no projeto:
-Componente
-Escolha
-Motivação
-Linguagem
-Python 3.12
-Popular, ecossistema de ML e ciência de dados maduro
-Processamento
-Polars, Pandas, NumPy, PyArrow
-Agregações de alto desempenho e interoperabilidade
-Modelos
-Regressão Logística & XGBoost
-Baseline interpretável e performance avançada
-Testes e qualidade
-Pytest, Black, Ruff, Isort, Mypy
-Garantir confiabilidade e manutenção sustentável
-Versionamento
-GitHub + Actions
-CI/CD, automação e controle de artefatos
-Pipelines
-Scripts modulados + Makefile
-Reprodutibilidade e padronização de execução
-Se você quiser, posso
+
+
+🛠️ **Decisões Técnicas & Stack Estratégica**
+
+As escolhas abaixo visam equilibrar performance computacional, manutenibilidade de código e valor de negócio:
+
+| Componente | Escolha | Motivação |
+|---|---|---|
+| Linguagem | Python 3.12 | Versão estável com melhorias de performance e tipagem. |
+| Processamento | Polars & PyArrow | Manipulação de grandes volumes de dados com performance superior ao Pandas. |
+| Modelagem | XGBoost & LogReg | Comparação entre um modelo de alta performance e um baseline interpretável. |
+| Qualidade | Ruff, Mypy & Black | Garantia de código limpo, tipagem estática e padronização automática. |
+| Automação | Makefile & Poetry | Padronização de comandos e gestão rigorosa de dependências. |
+| CI/CD | GitHub Actions | Execução automática de testes e linters a cada novo commit. |
+| Arquitetura | Pipelines Modulares | Separação clara entre Ingestão, Feature Engineering e Modelagem. |
 
 
 
