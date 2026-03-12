@@ -544,5 +544,4 @@ Com base nos resultados obtidos, os próximos passos recomendados são:
 
 ---
 
-> *"O mercado de trabalho não contrata quem usa ferramentas — contrata quem resolve problemas com elas."*
-> — Luiz Café & Meigarom Lopes
+
