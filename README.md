@@ -2,7 +2,6 @@
 
 <img width="1080" height="670" alt="CienciaDadosPix" src="https://github.com/user-attachments/assets/f3ae5290-64d6-4e21-909e-152e4092b308" />
 
-**Bootcamp Santander 2025 — Ciência de Dados com Python**
 
 ---
 
