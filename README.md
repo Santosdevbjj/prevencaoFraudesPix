@@ -1,6 +1,11 @@
 # Sistema de Prevenção de Fraudes em Pix em Tempo Real
 
 
+<p align="center">
+  <img src="data/assets/prevencao-fraude-pix.png" alt="Prevenção de Fraudes no Pix" width="600"/>
+</p>
+
+
 
 
 ---
