@@ -1,0 +1,3221 @@
+
+
+Por favor, reescreva o readme.md do repositório do meu projeto no Github:
+
+https://github.com/Santosdevbjj/prevencaoFraudesPix
+ 
+
+
+Seguindo as regras de Meigarom Lopes e Luiz Café.
+
+
+
+
+O readme.md está com esse conteúdo:
+
+
+
+# Sistema de Prevenção de Fraudes em Pix  em Tempo Real   
+
+
+<img width="1080" height="670" alt="CienciaDadosPix" src="https://github.com/user-attachments/assets/f3ae5290-64d6-4e21-909e-152e4092b308" />
+
+
+
+---
+
+**Visão Geral**
+
+Este projeto implementa um sistema de detecção de fraudes em transações Pix em tempo real, utilizando pipelines de ciência de dados, modelos de machine learning e boas práticas de engenharia de software.
+
+O objetivo é prevenir perdas financeiras e melhorar a experiência do cliente, oferecendo decisões rápidas com baixa latência, mantendo alta precisão e reprodutibilidade.
+
+---
+
+**Motivação**
+
+Criei este projeto para aplicar conhecimento em ciência de dados, engenharia de dados e machine learning em um problema real de fintechs e bancos digitais: fraudes em pagamentos instantâneos.
+
+Minha intenção foi:
+
+• Simular cenários de transações reais, incluindo padrões suspeitos;
+
+• Construir pipelines escaláveis e auditáveis;
+
+• Aplicar modelos interpretáveis (logística) e de alto desempenho (XGBoost/LightGBM);
+
+• Garantir governança de dados, qualidade de código e métricas de negócio.
+
+
+---
+
+**Problema que Resolve**
+
+Fraudes em Pix podem gerar perdas milionárias e prejudicar a confiança do cliente. O desafio é:
+
+• Detectar fraudes em tempo real;
+
+• Minimizar falsos positivos que impactam a experiência do usuário;
+
+• Otimizar custo financeiro agregado, considerando custo de fraude e operação;
+
+• Manter alta performance e monitoramento contínuo.
+
+
+---
+
+
+
+
+🛠️ **Decisões Técnicas & Stack Estratégica**
+
+As escolhas abaixo visam equilibrar performance computacional, manutenibilidade de código e valor de negócio:
+
+| Componente | Escolha | Motivação |
+|---|---|---|
+| Linguagem | Python 3.12 | Versão estável com melhorias de performance e tipagem. |
+| Processamento | Polars & PyArrow | Manipulação de grandes volumes de dados com performance superior ao Pandas. |
+| Modelagem | XGBoost & LogReg | Comparação entre um modelo de alta performance e um baseline interpretável. |
+| Qualidade | Ruff, Mypy & Black | Garantia de código limpo, tipagem estática e padronização automática. |
+| Automação | Makefile & Poetry | Padronização de comandos e gestão rigorosa de dependências. |
+| CI/CD | GitHub Actions | Execução automática de testes e linters a cada novo commit. |
+| Arquitetura | Pipelines Modulares | Separação clara entre Ingestão, Feature Engineering e Modelagem. |
+
+
+
+
+---
+
+
+**Trade-offs:**
+
+• Optei por Polars para performance em janelas temporais, embora Pandas seja mais comum;
+
+• Mantive regressão logística para interpretabilidade antes de aplicar modelos complexos;
+
+• Scripts detalhados foram priorizados em modularidade, mesmo aumentando a quantidade de arquivos.
+
+
+---
+
+**Tecnologias Utilizadas**
+
+• Ciência de Dados: Pandas, Polars, NumPy, PyArrow, Scikit-learn, XGBoost, LightGBM, Matplotlib, Seaborn
+
+• Qualidade: Black, Ruff, Isort, Mypy, Pytest
+
+• DevOps/Infra: Git, GitHub Actions, Poetry, pre-commit, Makefile
+
+• Ambiente: Python 3.12, JupyterLab/Notebook
+
+---
+
+**Como Executar**
+
+**Pré-requisitos*"
+
+• CPU 4+ núcleos, 16GB RAM, SSD recomendado
+
+• Python 3.12, Poetry 1.7+, Git, Make
+
+• JupyterLab para notebooks
+
+**Passos**
+
+**1. Clone o repositório**
+
+   ```
+   git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
+cd prevencaoFraudesPix
+```
+
+
+**2.Instale dependências e pre-commit**
+
+```
+poetry install
+poetry run pre-commit install
+```
+
+
+**3. Qualidade do código**
+
+```
+poetry run black src tests
+poetry run ruff check src tests --fix
+poetry run isort src tests
+poetry run mypy src
+```
+
+**4. Execução de pipelines**
+
+```
+poetry run python src/pipelines/build_dataset.py
+poetry run python src/pipelines/trainandeval.py
+poetry run python src/modeling/inference.py --input data/processed/realtimebatch.parquet --output models/reports/inferenceoutput.parquet
+```
+
+**5. Notebooks**
+
+```
+poetry run jupyter lab
+# 01_eda.ipynb, 02featureinspection.ipynb, 03thresholdanalysis.ipynb
+```
+
+---
+
+**Principais Aprendizados**
+
+• Importância de separar regras de negócio, pipelines e modelos;
+
+• Uso de Polars e PyArrow aumentou performance em janelas temporais;
+
+• Gerenciamento de thresholds dinâmicos e métricas de custo foi essencial para decisões financeiras;
+
+• Pipelines modularizadas e CI/CD reduzem risco operacional e facilitam manutenção;
+
+• Experiência prática em detecção de fraude real-time, métricas de latência e trade-offs de precisão/recall.
+
+---
+
+
+**Próximos Passos**
+
+• Integração com sistemas de risco e device intelligence;
+
+• Automatizar re-treino baseado em drift de dados;
+
+• Expandir cobertura de testes e refatorar pipelines para microservices;
+
+• Explorar novos modelos interpretáveis para auditoria regulatória.
+
+
+---
+
+**Impacto de Negócio**
+
+• Redução de perdas por fraude: detecção em tempo real com ROC-AUC e PR-AUC superiores ao baseline;
+
+• Latência média: <50 ms por transação, mantendo UX;
+
+• Custo otimizado: minimização de custo total = custofraude × FN + custooperacional × FP;
+
+• Governança e auditabilidade: versionamento de modelos, artefatos e relatórios.
+
+
+
+
+---
+---
+
+
+**Passo a passo para criar e executar o projeto**
+
+**Preparação do ambiente**
+
+- **Hardware recomendado:**
+  - CPU de múltiplos núcleos (4+), 16 GB RAM para treinos confortáveis.
+  - 10–20 GB de disco para artefatos e datasets intermediários.
+- **Software:**
+  - Python 3.12.
+  - Poetry 1.7+ para gerenciar dependências e ambientes.
+  - Git e GitHub para versionamento e CI.
+  - Make (GNU Make) para comandos padronizados.
+  - JupyterLab/Notebook para exploração.
+
+
+---
+
+**Instalação**
+
+**1. Instale Python 3.12 e pip.**
+**2. Instale Poetry:**
+   - Linux/macOS: curl -sSL https://install.python-poetry.org | python3 -
+   - Windows: via installer oficial do Poetry.
+**3. Clone o repositório:**
+   - git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
+   - cd prevencaoFraudesPix
+**4. Crie e ative o ambiente:**
+   - poetry install (ou poetry install --no-root se não for empacotar o projeto)
+**5. Instale pre-commit e ative hooks:**
+   - poetry run pre-commit install
+
+
+---
+
+**Execução de qualidade local**
+
+- **Formatação e lint:**
+  - poetry run black src tests
+  - poetry run ruff check src tests --fix
+  - poetry run isort src tests
+- **Tipos:**
+  - poetry run mypy src
+
+**Execução de pipelines**
+
+- Construir dataset:
+  - poetry run python src/pipelines/build_dataset.py
+- Treinar e avaliar:
+  - poetry run python src/pipelines/trainandeval.py
+- Inferência:
+  - poetry run python src/modeling/inference.py
+
+---
+
+
+**Prevenção de Fraudes em Pix — Sistema de detecção em tempo real**
+
+**Descrição**
+
+Este projeto implementa um pipeline completo para simulação de transações, engenharia de atributos, treinamento de modelos (logística e XGBoost), avaliação e inferência em tempo real. 
+
+A organização segue práticas de Data Science, com qualidade garantida por CI, testes e linters.
+
+---
+
+
+**Tecnologias utilizadas**
+
+- Linguagem: Python 3.12.
+- **Ciência de Dados:**
+  - Pandas, Polars, NumPy, PyArrow.
+  - Scikit-learn, XGBoost, LightGBM.
+  - Matplotlib, Seaborn para visualização.
+- **Qualidade:**
+  - Black (formatação), Ruff (lint), Isort (imports), Mypy (tipos).
+  - Pytest (testes).
+- **DevOps:**
+  - GitHub Actions (CI), pre-commit, Makefile, Poetry.
+ 
+---
+
+
+**Requisitos**
+
+- **Hardware:**
+  - CPU 4+ cores, 16 GB RAM, SSD recomendado.
+- **Software:**
+  - Python 3.12, Poetry 1.7+, Git, Make.
+  - JupyterLab para notebooks.
+
+
+---
+
+**Instalação e execução**
+
+**1. Clone o repositório:**
+   - git clone https://github.com/Santosdevbjj/prevencaoFraudesPix.git
+   - cd prevencaoFraudesPix
+     
+**2. Instale dependências:**
+   - poetry install
+     
+**3. Qualidade:**
+   - poetry run black src tests
+   - poetry run ruff check src tests --fix
+   - poetry run isort src tests
+   - poetry run mypy src
+     
+**4. Pipelines:**
+   - poetry run python src/pipelines/build_dataset.py
+   - poetry run python src/pipelines/trainandeval.py
+
+**5. Notebooks:**
+   - poetry run jupyter lab
+   - Abra notebooks/01eda.ipynb, 02featureinspection.ipynb, 03threshold_analysis.ipynb.
+
+
+--- 
+
+**Estrutura do repositório**
+
+
+<img width="877" height="1270" alt="Screenshot_20251205-192939" src="https://github.com/user-attachments/assets/4c653f2c-4860-4093-88e9-39669e263aae" />
+<img width="849" height="1134" alt="Screenshot_20251205-193104" src="https://github.com/user-attachments/assets/59ca820c-f2e4-44c5-bded-c49f4b483868" />
+
+
+
+ 
+---
+
+**Explicação das pastas e arquivos**
+
+- **data/**
+  - **raw/:** dados brutos simulados ou provenientes de logs.
+  - **interim/:** dados intermediários após limpeza/validações.
+  - **processed/:** dataset final com features para treino/inferência.
+- **models/**
+  - **artifacts/:** modelos treinados, encoders e escalers salvos.
+  - **reports/:** relatórios de métricas, curvas ROC/PR, confusion matrices.
+- **src/data/**
+  - **simulate_transactions.py:** gera transações Pix sintéticas com rótulos de fraude, distribuição de valores e padrões temporais.
+  - **schemas.py:** esquemas de colunas (tipos, obrigatoriedade) para garantir consistência.
+  - **utils.py:** utilidades de ingestão, validação básica e seed control.
+- **src/features/**
+  - **timewindowspolars.py:** agregações em janelas de tempo (ex.: contagem por minuto, soma de valores por hora) usando Polars para alta performance.
+  - **categorical.py:** encoding/normalização de variáveis categóricas (ex.: tipo de chave Pix, dispositivo).
+  - **validators.py:** guardrails de vazamento e sanidade (ex.: impedir uso de labels futuras).
+- **src/modeling/**
+  - **train_logreg.py:** pipeline de treinamento com regressão logística, baseline interpretável.
+  - **train_xgboost.py:** pipeline avançado com XGBoost, foco em desempenho.
+  - **evaluate.py:** avaliação com métricas (ROC-AUC, PR-AUC, F1, precisão/recall), curvas e relatórios.
+  - **inference.py:** função de predição em tempo real, com carregamento de artefatos e pré-processamento idêntico ao treino.
+- **src/utils/**
+  - **io.py:** leitura/escrita de datasets e artefatos com caminhos padronizados.
+  - **metrics.py:** métricas customizadas e utilitários de limiar.
+  - **config.py:** configuração central de caminhos, parâmetros de treino e janelas.
+- **src/pipelines/**
+  - **build_dataset.py:** orquestra ingestão, validações, engenharia de atributos e persiste dataset final.
+  - **trainandeval.py:** treina modelos, salva artefatos e gera relatórios comparativos.
+- **tests/**
+  - **testtimewindows.py:** testa agregações temporais e consistência das janelas.
+  - **testleakageguards.py:** testa validadores para evitar data leakage.
+  - **testinferencelatency.py:** mede latência de inferência e verifica limites.
+- **notebooks/**
+  - **01_eda.ipynb:** análise exploratória, distribuição de valores, taxas de fraude, sazonalidade.
+  - **02featureinspection.ipynb:** importância de features, correlações, drift potencial.
+  - **03thresholdanalysis.ipynb:** análise de trade-off entre precisão, recall e custo financeiro.
+- **.github/workflows/**
+  - **ci.yaml:** pipeline principal de testes e qualidade.
+  - **quality.yml:** lint/format/type checks.
+  - **auto-fix*.yml:** pipelines opcionais para correção automática.
+- **Configuração:**
+  - **pyproject.toml:** dependências, ferramentas de qualidade e configuração do projeto.
+  - **requirements.txt** e dev-requirements.txt: referências alternativas de dependências.
+  - **setup.cfg:** configurações de ferramentas (se necessário).
+  - **.pre-commit-config.yaml:** hooks de qualidade.
+  - **.gitignore:** arquivos ignorados.
+  - **Makefile:** comandos padronizados (ex.: build, train, eval).
+
+
+---
+
+**Como executar**
+
+- **Construção de dataset:**
+  - poetry run python src/pipelines/build_dataset.py
+- **Treino e avaliação:**
+  - poetry run python src/pipelines/trainandeval.py
+- **Inferência em tempo real (exemplo):**
+  - poetry run python src/modeling/inference.py --input data/processed/realtimebatch.parquet --output models/reports/inferenceoutput.parquet
+
+
+---
+
+**Exemplos de execução dos notebooks**
+
+- **Inicie Jupyter:**
+  - poetry run jupyter lab
+- **01_eda.ipynb:**
+  - Carregue data/processed/dataset.parquet.
+  - Plote distribuição de valores por hora; calcule taxa de fraude por janela.
+- **02featureinspection.ipynb:**
+  - Carregue artefatos do XGBoost.
+  - Extraia importâncias e compare com logística; **visualize SHAP.**
+- **03thresholdanalysis.ipynb:**
+  - Carregue models/reports/metrics.json.
+  - Varie thresholds de 0.1 a 0.9; calcule custo esperado: custofraude × falsosnegativos + custooperacional × falsospositivos; selecione limiar ótimo.
+
+---
+
+**Documentação das bibliotecas**
+
+- **pandas, numpy:** manipulação e operações numéricas.
+- **polars:** processamento colunar de alto desempenho, ideal para janelas temporais.
+- **pyarrow:** interoperabilidade e parquet/arrow.
+- **scikit-learn:** modelos clássicos, métricas, pipelines.
+- **xgboost, lightgbm:** gradient boosting eficientes.
+- **joblib:** serialização de artefatos.
+- **matplotlib, seaborn:** visualização.
+- **pytest:** testes automatizados.
+- **black, ruff, isort, mypy:** qualidade do código.
+
+
+
+---
+
+**Detalhamento dos arquivos:**
+
+**pyproject.toml**
+
+- Define nome, versão, descrição, licença.
+- Lista dependências de runtime e grupo dev (black, ruff, isort, mypy).
+- Configurações de Black, Ruff, Isort, Mypy.
+- Dica: se não for empacotar, usar package-mode = false ou poetry install --no-root.
+
+**requirements.txt e dev-requirements.txt**
+
+- Alternativas ao Poetry para ambientes onde pip é preferido.
+- requirements.txt: libs de produção (pandas, numpy, scikit-learn, xgboost, lightgbm, polars, pyarrow, matplotlib, seaborn, joblib, pytest).
+- dev-requirements.txt: ferramentas de qualidade (black, ruff, isort, mypy).
+
+**Makefile**
+
+- Targets típicos:
+  - make setup → poetry install, pre-commit install.
+  - make data → build_dataset.
+  - make train → trainandeval.
+  - make quality → black, ruff, isort, mypy.
+  - make test → pytest.
+
+**src/data**
+
+- simulate_transactions.py:
+  - Gera transações com campos: id, timestamp, valor, origem/destino, chave Pix, dispositivo, rótulo fraude.
+  - Controla seed, sazonalidade e padrões de comportamento suspeito.
+- schemas.py:
+  - Especifica schema com dtypes (ex.: timestamp como datetime64, valor como float).
+  - Funções para validar conformidade do dataset.
+- utils.py:
+  - Helpers de leitura/escrita e geração de amostras controladas.
+
+**src/features**
+
+- timewindowspolars.py:
+  - Funções de agregação por janelas: contagem/valor acumulado por 1min/5min/1h; número de destinatários únicos; frequência de transações.
+  - Implementadas em Polars para performance.
+- categorical.py:
+  - Encoding de categorias: one-hot/target encoding; normalizações.
+- validators.py:
+  - Regras anti-vazamento: impede uso de labels futuras; valida separação temporal treino/teste.
+
+**src/modeling**
+
+- train_logreg.py:
+  - Pipeline: load dataset, split, scale, treina regressão logística, salva artefatos e métricas.
+- train_xgboost.py:
+  - Similar ao acima; otimiza hiperparâmetros (grid/bayes opcional).
+- evaluate.py:
+  - Calcula métricas clássicas; gera relatórios e gráficos, salva em models/reports.
+- inference.py:
+  - Carrega artefatos, aplica o mesmo pré-processamento, prediz risco de fraude; otimiza latência.
+
+**src/utils**
+
+- io.py:
+  - API de caminho padrão; funções de load/save parquet/csv, artefatos joblib.
+- metrics.py:
+  - Métricas customizadas; funções para análise de threshold e custos.
+- config.py:
+  - Parâmetros globais (janelas, caminhos de dados, semente, limites de latência).
+
+**src/pipelines**
+
+- build_dataset.py:
+  - Orquestra simulador → valida schema → features → salva processed.
+- trainandeval.py:
+  - Treina modelos, compara métricas, salva artefatos e relatórios (gráficos, JSON).
+
+**data/**
+
+- raw/: insumos brutos (simulados).
+- interim/: dados pós-validações.
+- processed/: dataset final com features e rótulos.
+
+**models/**
+
+- artifacts/: .joblib/.json dos modelos e pré-processadores.
+- reports/: métricas e gráficos (.png, .json).
+
+**tests/**
+
+- testtimewindows.py: garante janelas corretas e sem inconsistências.
+- testleakageguards.py: verifica ausência de vazamento.
+- testinferencelatency.py: assegura latência máxima definida e estabilidade.
+
+**notebooks/**
+
+- **01_eda.ipynb:**
+  - Explora distribuição de transações, sazonalidade, padrões de fraude.
+- **02featureinspection.ipynb:**
+  - Analisa importância de features, correlação, SHAP opcional.
+- **03thresholdanalysis.ipynb:**
+  - Seleciona thresholds ótimos por custo.
+
+**.gitignore**
+
+- Ignora ambientes, caches, dados grandes, artefatos.
+
+**.github/workflows**
+
+- **ci.yaml:**
+  - Pytest, qualidade básica e build de artefatos.
+- quality.yml:
+  - Black (check), Ruff, Isort (check), Mypy.
+- auto-fix*.yml:
+  - Pipelines auxiliares que aplicam correções automáticas (opcional).
+
+**setup.cfg**
+
+- Centralização de configs para ferramentas que oferecem integração via setup.cfg (se aplicável).
+
+**.pre-commit-config.yaml**
+
+- Hooks: Black, Ruff (com --fix), Isort.
+- Opcional: integração com Mypy e Pytest.
+
+---
+
+**Exemplos:**
+
+**Construção de dataset**
+
+`bash
+poetry run python src/pipelines/build_dataset.py \
+  --input data/raw/transactions.parquet \
+  --output data/processed/dataset.parquet
+`
+
+**Treino e avaliação**
+
+`bash
+poetry run python src/pipelines/trainandeval.py \
+  --input data/processed/dataset.parquet \
+  --models-out models/artifacts/ \
+  --reports-out models/reports/
+`
+
+**Inferência**
+
+`bash
+poetry run python src/modeling/inference.py \
+  --input data/processed/new_batch.parquet \
+  --model models/artifacts/xgb_model.joblib \
+  --output models/reports/inference_scores.parquet
+`
+
+**Notebooks**
+
+- **01_eda.ipynb:**
+  - Carregue dataset: data/processed/dataset.parquet.
+  - Crie gráficos: histograma de valores, taxa de fraude por hora/dia.
+- **02featureinspection.ipynb:**
+  - Importâncias: carregue xgb_model.joblib, plote features por ganho.
+- **03thresholdanalysis.ipynb:**
+  - Analise métricas por threshold e calcule custo esperado; selecione limiar de decisão.
+
+---
+
+
+​🧠 **Aprendizados e Desafios Técnicos**
+
+​O desenvolvimento deste sistema trouxe desafios que foram além da modelagem preditiva, exigindo uma mentalidade de Engenharia de Machine Learning (MLOps):
+
+• **​Performance vs. Latência:** O maior desafio técnico foi garantir que o cálculo de janelas temporais (contagem de transações no último minuto/hora) fosse performático.
+
+A substituição do processamento linha a linha por agregações vetorizadas no Polars foi a decisão chave para manter a latência de inferência dentro dos limites aceitáveis para o Pix.
+
+• **​Prevenção de Data Leakage:** Em dados temporais, é fácil cometer o erro de usar informações do futuro para treinar o modelo. Implementei validadores rigorosos (validators.py) para garantir que as janelas de agregação e o split treino/teste respeitassem estritamente a linha do tempo.
+
+• **​Trade-off Financeiro:** Aprendi que a melhor métrica de Machine Learning (como um AUC alto) nem sempre é a melhor métrica de negócio. 
+
+• O uso do **Threshold Analysis** me permitiu entender que, em fraudes, o custo de um Falso Negativo (deixar a fraude passar) é muito superior ao de um Falso Positivo (bloqueio indevido), e calibrei o modelo para minimizar o prejuízo financeiro total, não apenas o erro estatístico.
+
+• **​Qualidade de Software em Dados:** A implementação de **Type Hinting (Mypy) e Linting (Ruff)** em um pipeline de Data Science foi fundamental para evitar bugs em tempo de execução, demonstrando que código de cientista de dados também deve ser código de produção.
+
+
+
+
+---
+
+
+
+## Relatórios executivos
+
+
+**Relatório para o CEO**
+
+- **Resumo estratégico:**
+  - O sistema reduz perdas por fraude em Pix com decisão em tempo real, preservando experiência do cliente.
+- **Benefícios:**
+  - Diminuição de fraude estimada em X% com incremento Y% em precisão, mantendo latência média inferior a 50 ms por transação (meta de produção).
+  - Arquitetura replicável e audítavel, com governança de dados e qualidade de código.
+- **Riscos e mitigação:**
+  - Drift de dados monitorado com re-treinos periódicos e alertas.
+  - Falsos positivos manejados por thresholds dinâmicos e revisão manual em casos de alto impacto.
+- **Próximos passos:**
+  - **Integração com sistemas de risco:** AB testing; ampliação de features comportamentais e device intelligence.
+
+
+---
+
+
+**Relatório para o diretor financeiro**
+
+- **Impacto econômico:**
+  - **Modelo de custo:** Custo total = custofraude × FN + custooperacional × FP.
+  - Otimização de limiar minimiza custo agregado, com simulações nos notebooks.
+- **Resultados:**
+  - ROC-AUC e PR-AUC superiores ao baseline (logística), XGBoost melhor performance.
+  - Cenários por sazonalidade e horários de pico avaliados.
+- **Governança:**
+  - Registros de modelos e relatórios em models/reports; versionamento por commit/tag.
+- **Recomendação:**
+  - Adoção do limiar 𝜏 que minimiza custo sob restrições de SLA e UX; recalibração trimestral.
+ 
+
+    ---
+
+    
+
+**Relatório para o gerente financeiro**
+
+- **Operação:**
+  - **Processo diário:** ingestão → features → scoring em tempo real → revisão de alertas.
+  - **Monitoramento de KPIs:** taxa de fraude, precisão, recall, latência, custo por transação.
+- **Procedimentos:**
+  - **Playbook em incidentes:** fallback para modelo baseline, logging detalhado e revisão de regras.
+- **Treinamento e adoção:**
+  - Treinamento de equipe para interpretar relatórios; canal de feedback com time de dados.
+
+---
+
+**Observações finais**
+
+- Este projeto foi desenhado para ser modular, auditável e evolutivo.
+- O ecossistema de qualidade (Ruff, Black, Isort, Mypy, Pytest, CI) reduz riscos operacionais e melhora a manutenibilidade.
+- Os notebooks complementam a transparência analítica e decisões orientadas a custos.
+
+> Repositório público e estrutura disponível no GitHub.
+
+
+
+---
+
+
+
+
+**Autor:**
+  Sergio Santos 
+
+
+---
+
+**Contato:**
+
+
+
+[![Portfólio Sérgio Santos](https://img.shields.io/badge/Portfólio-Sérgio_Santos-111827?style=for-the-badge&logo=githubpages&logoColor=00eaff)](https://portfoliosantossergio.vercel.app)
+
+[![LinkedIn Sérgio Santos](https://img.shields.io/badge/LinkedIn-Sérgio_Santos-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/santossergioluiz)
+
+
+
+
+
+
+--- 
+
+
+
+Por favor analise com atenção todos os arquivos do projeto. Para escrever corretamente o readme.md
+Explique cada pasta e arquivo do projeto, explique a funcionalidade de cada arquivo, e faça um esquema visual das pastas e arquivos do projeto.
+
+
+
+ARQUIVOS QUE COMPÕEM O PROJETO:
+
+
+
+dev-requirements.txt
+
+pytest==8.0.0
+black==24.4.0
+ruff==0.6.0
+isort==5.13.0
+mypy==1.10.0
+
+
+
+
+
+
+
+
+pyproject.toml
+
+
+[tool.poetry]
+name = "prevencao-fraudes-pix"
+version = "0.1.0"
+description = "Sistema de prevenção de fraudes em Pix em tempo real"
+authors = ["Sergio <seuemail@exemplo.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pandas = "^2.2.0"
+numpy = "^1.26.0"
+scikit-learn = "^1.5.0"
+xgboost = "^2.0.0"
+lightgbm = "^4.3.0"
+joblib = "^1.4.0"
+pyarrow = "^15.0.0"
+matplotlib = "^3.9.0"
+seaborn = "^0.13.0"
+pytest = "^8.0.0"
+polars = "^0.20.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.0.0"
+ruff = "^0.6.0"
+isort = "^5.13.0"
+mypy = "^1.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# ============================
+# Configuração do Black
+# ============================
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+skip-string-normalization = false
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.git
+    | \.venv
+    | build
+    | dist
+    | data
+    | models
+  )/
+)
+'''
+
+# ============================
+# Configuração do Ruff
+# ============================
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+exclude = [
+    ".git",
+    ".venv",
+    "build",
+    "dist",
+    "data",
+    "models",
+]
+# Seleção de regras (PEP8 + Pyflakes + Bugbear + isort)
+select = ["E", "F", "W", "C90", "B", "I"]
+ignore = ["E203", "W503"]  # compatível com Black
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+# ============================
+# Configuração do Isort
+# ============================
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+combine_as_imports = true
+skip = ["data", "models"]
+
+# ============================
+# Configuração do Mypy
+# ============================
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+strict_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true 
+
+
+
+
+
+
+
+
+
+
+
+
+requirements.txt
+
+
+pandas==2.2.0
+numpy==1.26.0
+scikit-learn==1.5.0
+xgboost==2.0.0
+lightgbm==4.3.0
+joblib==1.4.0
+pyarrow==15.0.0
+matplotlib==3.9.0
+seaborn==0.13.0
+polars==0.20.0 
+
+
+
+
+
+
+
+
+
+
+
+
+setup.cfg
+
+
+[flake8]
+# Alinha com Black (usa 88 caracteres em vez de 79)
+max-line-length = 88
+
+# Ignora regras que conflitam com Black
+extend-ignore = E203, W503
+
+# Seleciona erros relevantes (PEP8 + Pyflakes + Bugbear)
+select = C,E,F,W,B
+extend-select = B950
+
+# Exclui pastas que não precisam ser lintadas
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    .mypy_cache,
+    .ruff_cache,
+    build,
+    dist,
+    data,
+    models
+
+# Relatórios mais claros
+statistics = True
+count = True
+show-source = True
+
+# Evita ruído de linhas longas tradicionais; usamos B950 para isso
+ignore = E501
+
+# Permissões específicas por arquivo/pasta (se quiser manter E501 em produção)
+per-file-ignores =
+    tests/*: E501
+
+[mypy]
+python_version = 3.12
+ignore_missing_imports = True
+strict_optional = True
+warn_unused_ignores = True
+warn_redundant_casts = True
+warn_unused_configs = True
+# Opcional, útil em layout com 'src/'
+explicit_package_bases = True
+
+[isort]
+profile = black
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = True
+force_grid_wrap = 0
+combine_as_imports = True
+skip =
+    data,
+    models 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Makefile
+
+
+.PHONY: format setup clean simulate features train test lint quality fix all
+
+# ==============================================================================
+# QUALIDADE E MANUTENÇÃO
+# ==============================================================================
+format:
+	poetry run black src tests
+	@echo "Código formatado com sucesso! (Black)"
+
+lint:
+	poetry run ruff check .
+
+fix:
+	poetry run ruff check src tests --fix
+	poetry run black src tests
+	@echo "✅ Correções automáticas aplicadas (Ruff + Black)"
+
+setup:
+	poetry install
+
+clean:
+	@echo "Limpando artefatos gerados (datasets e modelos)..."
+	rm -rf data/processed/*
+	rm -rf models/artifacts/*
+
+# Target de Orquestração de Qualidade
+# Garante que a formatação é executada antes do lint e dos testes.
+quality: format lint test
+	@echo "✅ Pipeline de Qualidade concluído."
+
+# ==============================================================================
+# PIPELINE DE MLOPS
+# ==============================================================================
+simulate:
+	poetry run python src/data/simulate_transactions.py
+
+features:
+	poetry run python src/pipelines/build_dataset.py
+
+train:
+	poetry run python src/pipelines/train_and_eval.py --model xgboost
+
+test:
+	poetry run pytest -q
+
+# Target principal para rodar todo o fluxo
+all: simulate features train quality 
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/data/schemas.py
+
+TEM ESSE CONTEÚDO 
+
+
+from typing import TypedDict
+
+class TransactionSchema(TypedDict):
+    transaction_id: str
+    user_id: int
+    timestamp: str
+    amount: float
+    sender_account_age_days: int
+    recipient_bank: str
+    is_first_time_recipient: int
+    internal_risk_score: float
+    max_credit_limit: float
+    historical_default_rate: float
+    time_since_last_login: int
+    change_of_device: int
+    is_fraud: int. 
+
+
+
+
+
+
+
+
+
+
+
+src/data/simulate_transactions.py
+
+
+# src/data/simulate_transactions.py
+import numpy as np
+import pandas as pd
+from pathlib import Path
+
+rng = np.random.default_rng(42)
+
+def simulate(n_rows: int = 200_000, fraud_rate: float = 0.008) -> pd.DataFrame:
+    ts0 = pd.Timestamp("2025-11-01")
+    timestamps = ts0 + pd.to_timedelta(rng.integers(0, 60*24*30, size=n_rows), unit="m")
+    user_ids = rng.integers(1, 50_000, size=n_rows)
+    amounts = rng.uniform(10, 5000, size=n_rows).round(2)
+
+    # transacionais adicionais
+    sender_account_age_days = rng.integers(1, 3650, size=n_rows)
+    recipient_bank = rng.choice(["001","237","260","290","341","033"], size=n_rows)
+    is_first_time_recipient = rng.choice([0,1], size=n_rows, p=[0.9, 0.1])
+
+    # risco interno
+    internal_risk_score = rng.normal(600, 80, size=n_rows).clip(300, 900)
+    max_credit_limit = rng.uniform(500, 50000, size=n_rows)
+    historical_default_rate = rng.uniform(0.0, 0.2, size=n_rows)
+
+    # comportamento login/device (simples)
+    time_since_last_login = rng.integers(5, 60*60*24, size=n_rows)  # em segundos
+    change_of_device = rng.choice([0,1], size=n_rows, p=[0.97, 0.03])
+
+    # fraude desbalanceada
+    is_fraud = rng.choice([0,1], size=n_rows, p=[1 - fraud_rate, fraud_rate])
+
+    df = pd.DataFrame({
+        "transaction_id": rng.integers(1e9, 1e10, size=n_rows).astype(str),
+        "user_id": user_ids,
+        "timestamp": timestamps,
+        "amount": amounts,
+        "sender_account_age_days": sender_account_age_days,
+        "recipient_bank": recipient_bank,
+        "is_first_time_recipient": is_first_time_recipient,
+        "internal_risk_score": internal_risk_score,
+        "max_credit_limit": max_credit_limit,
+        "historical_default_rate": historical_default_rate,
+        "time_since_last_login": time_since_last_login,
+        "change_of_device": change_of_device,
+        "is_fraud": is_fraud
+    }).sort_values("timestamp").reset_index(drop=True)
+
+    return df
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n_rows", type=int, default=200_000)
+    parser.add_argument("--fraud_rate", type=float, default=0.008)
+    parser.add_argument("--out", type=str, default="data/raw/transactions.parquet")
+    args = parser.parse_args()
+
+    Path("data/raw").mkdir(parents=True, exist_ok=True)
+    df = simulate(args.n_rows, args.fraud_rate)
+    df.to_parquet(args.out, index=False)
+    print(f"Saved: {args.out}, rows={len(df)}") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/data/utils.py
+
+import numpy as np
+
+def set_seed(seed: int = 42):
+    np.random.seed(seed) 
+
+
+
+
+
+
+
+src/features/categorical.py
+
+
+import pandas as pd
+
+
+def encode_categorical(df: pd.DataFrame) -> pd.DataFrame:
+    df = pd.get_dummies(df, columns=["recipient_bank"], drop_first=True)
+    return df 
+
+
+
+
+
+
+
+
+
+
+
+
+src/features/time_windows_polars.py
+
+
+
+# src/features/time_windows_polars.py
+import polars as pl
+
+
+def features_time_based_polars(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    Gera features temporais baseadas em janelas de tempo usando Polars.
+
+    Features criadas:
+    - num_pix_last_1h: número de transações nos últimos 60 minutos.
+    - avg_amount_last_7d: média dos valores transacionados nos últimos 7 dias.
+    - std_amount_last_30d: desvio padrão dos valores nos últimos 30 dias.
+    - num_unique_recipients_24h: número de recebedores únicos em uma janela de 24h.
+
+    Args:
+        df (pl.DataFrame): DataFrame contendo colunas 'user_id', 'timestamp',
+                           'amount' e 'recipient_id'.
+
+    Returns:
+        pl.DataFrame: DataFrame original com as novas features adicionadas.
+    """
+    # Garantir ordenação por usuário e timestamp
+    df = df.sort(["user_id", "timestamp"])
+
+    # num_pix_last_1h: rolling count
+    df = df.with_columns(
+        pl.col("timestamp")
+        .rolling_count(window="1h", by="user_id")
+        .alias("num_pix_last_1h")
+    )
+
+    # avg_amount_last_7d: média dos amounts nos últimos 7 dias
+    df = df.with_columns(
+        pl.col("amount")
+        .rolling_mean(window="7d", by="user_id", closed="left")
+        .alias("avg_amount_last_7d")
+    )
+
+    # std_amount_last_30d: desvio padrão nos últimos 30 dias
+    df = df.with_columns(
+        pl.col("amount")
+        .rolling_std(window="30d", by="user_id", closed="left")
+        .alias("std_amount_last_30d")
+    )
+
+    # num_unique_recipients_24h: contagem de recebedores únicos
+    # Polars não tem rolling nunique direto, usamos groupby_dynamic
+    df_unique = (
+        df.groupby_dynamic(
+            index_column="timestamp",
+            every="1h",
+            period="24h",
+            by="user_id",
+            closed="left",
+        )
+        .agg(pl.col("recipient_id").n_unique().alias("num_unique_recipients_24h"))
+    )
+
+    # Join de volta ao dataframe original
+    df = df.join(df_unique, on=["user_id", "timestamp"], how="left")
+
+    return df 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/features/validators.py
+
+
+# src/features/validators.py
+import pandas as pd
+
+
+def check_no_leakage(df: pd.DataFrame) -> None:
+    """
+    Valida se o DataFrame não contém vazamento de informação (data leakage).
+
+    O objetivo é garantir que variáveis que não deveriam estar presentes
+    nas features — como a variável alvo 'is_fraud' ou outras colunas
+    derivadas diretamente dela — não estejam incluídas no conjunto de dados
+    usado para treinamento ou inferência.
+
+    Args:
+        df (pd.DataFrame): DataFrame contendo as features e possivelmente a
+                           variável alvo.
+
+    Raises:
+        ValueError: Se a coluna 'is_fraud' ou qualquer outra coluna proibida
+                    for encontrada nas features.
+    """
+    # Exemplo de checagem simples: verificar se 'is_fraud' está presente
+    if "is_fraud" in df.columns:
+        raise ValueError(
+            "Data leakage detectado: coluna 'is_fraud' não deve estar nas features."
+        ) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/modeling/evaluate.py
+
+# src/modeling/evaluate.py
+from sklearn.metrics import roc_auc_score, recall_score, confusion_matrix
+
+
+def evaluate(model, X_test, y_test, threshold: float = 0.5) -> dict:
+    """
+    Avalia um modelo de classificação binária em um conjunto de teste.
+
+    Calcula métricas-chave para detecção de fraude, permitindo definir
+    um ponto de corte (threshold) flexível para a probabilidade prevista.
+
+    Args:
+        model: Modelo treinado com método `predict_proba`.
+        X_test (array-like): Features de teste.
+        y_test (array-like): Labels verdadeiros.
+        threshold (float): Limite de decisão para classificar como fraude.
+
+    Returns:
+        dict: Dicionário com métricas:
+            - auc: Área sob a curva ROC.
+            - threshold: Limite usado para classificação.
+            - recall: Sensibilidade (taxa de detecção de fraude).
+            - fpr: Taxa de falsos positivos.
+            - confusion_matrix: Matriz de confusão em formato lista.
+    """
+    # 1. Previsão de probabilidades e classificação binária
+    proba = model.predict_proba(X_test)[:, 1]
+    y_pred = (proba >= threshold).astype(int)
+
+    # 2. Cálculo das métricas
+    auc = roc_auc_score(y_test, proba)
+    recall = recall_score(y_test, y_pred)
+    cm = confusion_matrix(y_test, y_pred)
+
+    # 3. Cálculo do FPR (False Positive Rate)
+    # cm: [[TN, FP], [FN, TP]]
+    TN, FP, FN, TP = cm.ravel()
+
+    fpr = 0.0 if (FP + TN) == 0 else FP / (FP + TN)
+
+    # 4. Retorno dos resultados
+    return {
+        "auc": auc,
+        "threshold": threshold,
+        "recall": recall,
+        "fpr": fpr,
+        "confusion_matrix": cm.tolist(),
+    } 
+
+
+
+
+
+
+
+
+
+
+
+
+src/modeling/inference.py
+
+
+# src/modeling/inference.py
+import time
+import joblib
+import numpy as np
+import pandas as pd
+# Removido: from pathlib import Path (F401 - não utilizado)
+
+def infer_single(model, row: pd.Series, feature_cols):
+    """
+    Realiza a inferência e mede a latência total (pré-processamento + previsão).
+    """
+    t0 = time.perf_counter()  # <-- Medição começa aqui para incluir o pré-processamento
+    
+    # Pré-processamento e formato (NumPy 2D)
+    X = row[feature_cols].fillna(0).values.reshape(1, -1)
+    
+    # Previsão do modelo
+    p = model.predict_proba(X)[0, 1]
+    
+    dt_ms = (time.perf_counter() - t0) * 1000
+    return p, dt_ms
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", type=str, default="models/artifacts/model_xgb.joblib")
+    parser.add_argument("--data", type=str, default="data/processed/dataset.parquet")
+    parser.add_argument("--n_events", type=int, default=1000)
+    args = parser.parse_args()
+
+    # Carregamento de Modelo e Dados
+    model = joblib.load(args.model)
+    df = pd.read_parquet(args.data).tail(args.n_events)
+    
+    # Lista de Features (corrigida pelo Black/PEP 8)
+    feature_cols = [
+        "amount", "sender_account_age_days", "internal_risk_score", 
+        "max_credit_limit", "historical_default_rate", "time_since_last_login",
+        "change_of_device", "is_first_time_recipient", "num_pix_last_1h",
+        "avg_amount_last_7d", "std_amount_last_30d", "num_unique_recipients_24h"
+    ]
+    
+    latencies = []
+    
+    # Simulação da Inferência (Iteração lenta, mas fiel ao evento único)
+    print(f"Simulando latência em {args.n_events} eventos...")
+    for _, row in df.iterrows():
+        _, dt_ms = infer_single(model, row, feature_cols)
+        latencies.append(dt_ms)
+
+    # Resultados (Latência Média e P95)
+    avg_lat = np.mean(latencies)
+    p95_lat = np.percentile(latencies, 95)
+    
+    print(f"\n✨ Resultados da Inferência ({args.n_events} eventos):")
+    print(f"  - Latência Média: {avg_lat:.2f} ms")
+    print(f"  - Latência P95: {p95_lat:.2f} ms") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/modeling/train_logreg.py
+
+
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
+
+df = pd.read_parquet("data/processed/dataset.parquet")
+X = df.drop(columns=["is_fraud"])
+y = df["is_fraud"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+
+model = LogisticRegression(max_iter=1000, class_weight="balanced")
+model.fit(X_train, y_train)
+
+proba = model.predict_proba(X_test)[:,1]
+print("AUC:", roc_auc_score(y_test, proba)) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/modeling/train_xgboost.py
+
+
+# src/modeling/train_xgboost.py
+import json
+import joblib
+import numpy as np
+import pandas as pd
+from pathlib import Path
+from sklearn.metrics import roc_auc_score, recall_score
+from xgboost import XGBClassifier
+from src.modeling.evaluate import evaluate # Importando a função de avaliação aprimorada
+
+def prepare(df: pd.DataFrame):
+    """
+    Prepara o DataFrame para o treinamento, selecionando e codificando features.
+    """
+    # Lista de features numéricas e de agregação
+    cols = [
+        "amount",
+        "sender_account_age_days",
+        "internal_risk_score",
+        "max_credit_limit",
+        "historical_default_rate",
+        "time_since_last_login",
+        "change_of_device",
+        "is_first_time_recipient",
+        "num_pix_last_1h",
+        "avg_amount_last_7d",
+        "std_amount_last_30d",
+        "num_unique_recipients_24h",
+    ]
+    
+    df = df.copy()
+    
+    # Encoding categórico simples (One-Hot Encoding)
+    # Assumimos que 'recipient_bank' ainda está presente no dataset.parquet
+    df = pd.get_dummies(df, columns=["recipient_bank"], drop_first=True)
+
+    # Criação final de X e y
+    X = df[
+        cols + [c for c in df.columns if c.startswith("recipient_bank_")]
+    ].fillna(0)
+    y = df["is_fraud"].astype(int)
+    return X, y
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--data", type=str, default="data/processed/dataset.parquet"
+    )
+    parser.add_argument(
+        "--out_model",
+        type=str,
+        default="models/artifacts/model_xgb.joblib",
+    )
+    parser.add_argument(
+        "--out_report",
+        type=str,
+        default="models/reports/metrics_xgb.json",
+    )
+    args = parser.parse_args()
+
+    # Criação dos diretórios de saída
+    Path("models/artifacts").mkdir(parents=True, exist_ok=True)
+    Path("models/reports").mkdir(parents=True, exist_ok=True)
+
+    # 1. Preparação dos Dados
+    df = pd.read_parquet(args.data)
+    X, y = prepare(df)
+
+    # 2. Divisão Temporal de Dados: último 10% como teste (simulação de futuro)
+    n = len(df)
+    cut = int(n * 0.9)
+    X_train, y_train = X.iloc[:cut], y.iloc[:cut]
+    X_test, y_test = X.iloc[cut:], y.iloc[cut:]
+
+    # Lidar com desbalanceamento (Taxa Negativos / Taxa Positivos)
+    pos_weight = (len(y_train) - y_train.sum()) / max(y_train.sum(), 1)
+
+    # 3. Treinamento do Modelo
+    model = XGBClassifier(
+        n_estimators=300,
+        max_depth=6,
+        learning_rate=0.05,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        reg_alpha=0.0,
+        reg_lambda=1.0,
+        random_state=42,
+        n_jobs=-1,
+        tree_method="hist",
+        scale_pos_weight=pos_weight, # Tratamento de desbalanceamento
+    )
+
+    print("Iniciando treinamento do XGBoost...")
+    model.fit(X_train, y_train)
+
+    # 4. Avaliação e Otimização do Threshold
+    proba = model.predict_proba(X_test)[:, 1]
+    auc = roc_auc_score(y_test, proba)
+
+    # Busca o melhor threshold (Trade-off entre Recall e FPR)
+    thresholds = np.linspace(0.5, 0.99, 20)
+    best_metrics = {"threshold": 0.0, "recall": 0.0, "fpr": 1.0, "auc": float(auc)}
+    
+    for t in thresholds:
+        metrics = evaluate(model, X_test, y_test, threshold=t)
+        
+        # Otimiza o threshold: prioriza Recall mais alto, depois o menor FPR
+        if metrics["recall"] >= best_metrics["recall"] and metrics["fpr"] <= best_metrics["fpr"]:
+            best_metrics.update({
+                "threshold": metrics["threshold"], 
+                "recall": metrics["recall"], 
+                "fpr": metrics["fpr"],
+                "auc": metrics["auc"],
+            })
+
+    # 5. Salvamento dos Artefatos
+    joblib.dump(model, args.out_model)
+    with open(args.out_report, "w") as f:
+        # Garante que os valores numéricos sejam floats nativos para JSON
+        json.dump({k: float(v) if isinstance(v, (np.float64, np.float32)) else v 
+                   for k, v in best_metrics.items()}, f, indent=2)
+
+    print("\n✨ Treinamento Concluído!")
+    print(f"  - AUC: {best_metrics['auc']:.4f}")
+    print(f"  - Best Threshold: {best_metrics['threshold']:.4f}")
+    print(f"  - Melhor Recall: {best_metrics['recall']:.3f}")
+    print(f"  - FPR (Bloqueios Incorretos): {best_metrics['fpr']:.4f}")
+    print(f"Modelo salvo em: {args.out_model}") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/pipelines/build_dataset.py
+
+
+import argparse
+from pathlib import Path
+# Removido: import pandas as pd (Não é usado diretamente neste script)
+
+# Importação dos módulos do projeto
+from src.data.simulate_transactions import simulate
+from src.features.time_windows import features_time_based # Mantido, assumindo que usa Pandas/Polars internamente
+from src.features.categorical import encode_categorical
+from src.utils.io import write_parquet
+
+def build_dataset(nrows: int, fraud_rate: float, output_path: str):
+    """
+    Orquestra a pipeline completa de criação do dataset:
+    Simulação -> Feature Engineering Temporal -> Codificação Categórica.
+    
+    Args:
+        nrows (int): Número de transações a simular.
+        fraud_rate (float): Proporção de fraude no dataset (ex: 0.008).
+        output_path (str): Caminho completo para salvar o arquivo Parquet final.
+    """
+    print(f"Iniciando simulação de {nrows:,} transações...")
+    
+    # 1. Simulação dos Dados Brutos
+    df = simulate(nrows=nrows, fraud_rate=fraud_rate)
+    
+    print("Iniciando Feature Engineering Temporal (Rolling Windows)...")
+    # 2. Feature Engineering Temporal (Anti-Leakage)
+    df = features_time_based(df)
+    
+    print("Iniciando Codificação Categórica...")
+    # 3. Codificação Categórica
+    df = encode_categorical(df)
+    
+    print(f"Dataset final criado com {len(df.columns)} colunas.")
+    
+    # 4. Escrita do Arquivo Final
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    write_parquet(df, output_path)
+    
+    print(f"Dataset salvo com sucesso em: {output_path}")
+
+
+if __name__ == "__main__":
+    # Define o parser para receber argumentos de linha de comando
+    parser = argparse.ArgumentParser(
+        description="Orquestra a criação do dataset de fraude do início ao fim."
+    )
+    parser.add_argument(
+        "--nrows",
+        type=int,
+        default=200_000,
+        help="Número de linhas (transações) a simular."
+    )
+    parser.add_argument(
+        "--fraud_rate",
+        type=float,
+        default=0.008,
+        help="Taxa de fraude a simular (0.008 = 0.8%)."
+    )
+    parser.add_argument(
+        "--output_path",
+        type=str,
+        default="data/processed/dataset.parquet",
+        help="Caminho onde o dataset final processado será salvo."
+    )
+    
+    args = parser.parse_args()
+    
+    build_dataset(
+        nrows=args.nrows,
+        fraud_rate=args.fraud_rate,
+        output_path=args.output_path
+    ) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/pipelines/train_and_eval.py
+
+
+import argparse
+import joblib
+import pandas as pd
+from pathlib import Path
+
+# Importação dos módulos do projeto
+from src.modeling.train_xgboost import prepare # Prepara X e y
+from src.modeling.evaluate import evaluate     # Avaliação completa (AUC, Recall, FPR, CM)
+from xgboost import XGBClassifier
+from sklearn.linear_model import LogisticRegression
+
+def train_and_evaluate(data_path: str, model_name: str):
+    """
+    Orquestra o treinamento do modelo (XGBoost ou LogReg) e a avaliação completa.
+    """
+    
+    # 1. Configuração de IO
+    model_artifact_path = Path(f"models/artifacts/model_{model_name}.joblib")
+    report_path = Path(f"models/reports/metrics_{model_name}.json")
+    
+    Path("models/artifacts").mkdir(parents=True, exist_ok=True)
+    Path("models/reports").mkdir(parents=True, exist_ok=True)
+
+    # 2. Carregamento e Preparação dos Dados
+    print(f"Lendo dados de: {data_path}")
+    df = pd.read_parquet(data_path)
+    X, y = prepare(df)
+
+    # 3. Divisão Temporal (Split de 90% Treino / 10% Teste)
+    n = len(df)
+    cut = int(n * 0.9)
+    X_train, y_train = X.iloc[:cut], y.iloc[:cut]
+    X_test, y_test = X.iloc[cut:], y.iloc[cut:]
+    
+    # Cálculo do peso de posição para lidar com o desbalanceamento
+    pos_weight = (len(y_train) - y_train.sum()) / max(y_train.sum(), 1)
+
+    # 4. Inicialização do Modelo
+    if model_name == "xgboost":
+        # Configurações otimizadas do XGBoost, incluindo scale_pos_weight
+        model = XGBClassifier(
+            n_estimators=300, max_depth=6, learning_rate=0.05,
+            random_state=42, n_jobs=-1, tree_method="hist",
+            scale_pos_weight=pos_weight
+        )
+    elif model_name == "logreg":
+        # Logistic Regression para baseline
+        model = LogisticRegression(solver='liblinear', random_state=42, 
+                                   class_weight='balanced')
+    else:
+        raise ValueError(f"Modelo '{model_name}' não suportado.")
+
+    print(f"Iniciando treinamento do modelo: {model_name}...")
+    model.fit(X_train, y_train)
+
+    # 5. Avaliação e Geração de Relatório
+    # Usamos o threshold default de 0.5 apenas para a avaliação básica (função evaluate)
+    metrics = evaluate(model, X_test, y_test, threshold=0.5)
+    
+    # Salvamento do Modelo e Métricas
+    joblib.dump(model, model_artifact_path)
+    with open(report_path, "w") as f:
+        # Serializamos as métricas em JSON
+        json_metrics = {k: v.tolist() if isinstance(v, list) else v for k, v in metrics.items()}
+        import json # Necessário para dump, não queremos ele no topo para F401
+        json.dump(json_metrics, f, indent=2)
+
+    # 6. Logging
+    print("\n✨ Treinamento e Avaliação Concluídos!")
+    print(f"  - Modelo Salvo em: {model_artifact_path}")
+    print(f"  - AUC: {metrics['auc']:.4f}")
+    print(f"  - Recall (@0.5): {metrics['recall']:.3f}")
+    print(f"  - Matriz de Confusão salva em: {report_path}")
+
+if __name__ == "__main__":
+    # Define o parser para receber argumentos de linha de comando
+    parser = argparse.ArgumentParser(
+        description="Treina e avalia um modelo (XGBoost ou LogReg) no dataset processado."
+    )
+    parser.add_argument(
+        "--data",
+        type=str,
+        default="data/processed/dataset.parquet",
+        help="Caminho para o dataset processado."
+    )
+    parser.add_argument(
+        "--model",
+        type=str,
+        choices=["xgboost", "logreg"],
+        default="xgboost",
+        help="Modelo a ser treinado (xgboost ou logreg)."
+    )
+    
+    args = parser.parse_args()
+    
+    train_and_evaluate(
+        data_path=args.data,
+        model_name=args.model
+    ) 
+
+
+
+
+
+
+
+
+
+
+
+
+src/prevencao_fraudes_pix/__init__.py
+
+
+
+
+
+
+src/utils/config.py
+
+
+DATA_RAW = "data/raw/transactions.parquet"
+DATA_PROCESSED = "data/processed/dataset.parquet"
+MODEL_ARTIFACT = "models/artifacts/model_xgb.joblib"
+REPORT_METRICS = "models/reports/metrics_xgb.json" 
+
+
+
+
+
+
+
+
+
+src/utils/io.py
+
+
+import pandas as pd
+
+def read_parquet(path: str) -> pd.DataFrame:
+    return pd.read_parquet(path)
+
+def write_parquet(df: pd.DataFrame, path: str):
+    df.to_parquet(path, index=False) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+src/utils/metrics.py
+
+
+from sklearn.metrics import roc_auc_score, recall_score
+
+def auc(y_true, y_proba):
+    return roc_auc_score(y_true, y_proba)
+
+def recall(y_true, y_pred):
+    return recall_score(y_true, y_pred) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+tests/test_inference_latency.py
+
+
+import time
+import numpy as np
+import pandas as pd
+import joblib
+import pytest
+from src.modeling.inference import infer_single # Assume que infer_single está correto
+
+# 1. Mock de Dados de Entrada para o Teste
+@pytest.fixture
+def sample_feature_row():
+    """Cria uma linha de dados simulada com 12 features numéricas (exemplo)."""
+    # Esta linha deve simular as features que o seu modelo XGBoost espera.
+    # Exemplo simplificado (você deve ajustá-lo ao número exato de colunas do seu X):
+    return pd.Series({
+        "amount": 100.50,
+        "senderaccountagedays": 300,
+        "internalriskscore": 750.0,
+        "maxcreditlimit": 15000.0,
+        "historicaldefaultrate": 0.01,
+        "timesincelastlogin": 3600,
+        "changeofdevice": 0,
+        "isfirsttimerecipient": 1,
+        "numpixlast1h": 5,
+        "avgamountlast7d": 500.0,
+        "stdamountlast30d": 1000.0,
+        "numuniquerecipients24h": 3,
+    })
+
+# 2. Mock do Modelo (para não depender de um arquivo salvo)
+# Em um teste real, você carregaria o modelo salvo, mas para isolamento,
+# podemos simular um modelo leve ou garantir que um modelo real exista.
+# VAMOS ASSUMIR QUE O ARQUIVO models/artifacts/model_xgb.joblib EXISTE E É LEVE.
+
+def test_latency_under_50ms(sample_feature_row):
+    """Testa se a latência média da inferência é menor que 50 ms."""
+    
+    # 1. CARREGAR O ARTEFATO DO MODELO (Correção de 'job' para 'joblib')
+    # O caminho deve ser ajustado, mas o ideal é que seja o modelo treinado.
+    try:
+        model = joblib.load('models/artifacts/model_xgb.joblib')
+    except FileNotFoundError:
+        # Se o modelo não foi treinado ainda, pule o teste.
+        pytest.skip("Modelo não encontrado. Treine o modelo primeiro (python src/pipelines/trainandeval.py).")
+        return
+
+    N_RUNS = 100  # Número de execuções para média
+    latencies_ms = []
+
+    # 2. MEDIR LATÊNCIA
+    # Simula o cálculo de features columns que são usadas no modelo
+    feature_cols = sample_feature_row.index.tolist()
+
+    for _ in range(N_RUNS):
+        # infere_single retorna (probabilidade, tempo_em_ms)
+        _, dt_ms = infer_single(model, sample_feature_row, feature_cols)
+        latencies_ms.append(dt_ms)
+
+    # 3. VALIDAÇÃO
+    average_latency = np.mean(latencies_ms)
+    p95_latency = np.percentile(latencies_ms, 95)
+    
+    # Assert do Requisito de Negócio (Latência < 50ms)
+    print(f"\nLatência Média: {average_latency:.2f} ms")
+    print(f"Latência P95: {p95_latency:.2f} ms")
+    
+    # Usamos o P95 para o teste ser mais rigoroso e simular a performance da maioria dos usuários.
+    # Você pode escolher o P50 (média) ou P95.
+    assert p95_latency < 50.0, f"Latência P95 ({p95_latency:.2f} ms) excede 50 ms." 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+tests/test_leakage_guards.py
+
+
+import pandas as pd
+import pytest
+from src.features.validators import check_no_leakage # Assumindo que check_no_leakage existe
+
+# Assumindo que check_no_leakage() verifica a presença de 'is_fraud' ou 'target_encoded_...'
+# e que levanta um ValueError se encontrar alguma delas.
+
+def test_leakage_present_should_fail():
+    """
+    CENÁRIO 1: Testa se o validador FALHA quando a variável alvo ('is_fraud') 
+    está indevidamente presente nas features.
+    """
+    
+    # Simula um DataFrame que tem a target, que é um vazamento direto
+    df_leak = pd.DataFrame({
+        "feature_A": [1, 2],
+        "is_fraud": [0, 1]  # Vazamento Direto
+    })
+
+    # O teste SÓ passa se a função levantar um ValueError (ou a exceção que você usa)
+    with pytest.raises(ValueError, match="Variável 'is_fraud' encontrada"):
+        check_no_leakage(df_leak)
+
+def test_no_leakage_should_pass():
+    """
+    CENÁRIO 2: Testa se o validador PASSA (não levanta exceção) quando 
+    apenas features legítimas estão presentes.
+    """
+    
+    # Simula um DataFrame limpo
+    df_clean = pd.DataFrame({
+        "feature_A": [1, 2],
+        "time_since_last_pix": [100, 200]
+    })
+    # A função deve rodar sem levantar exceções
+    try:
+        check_no_leakage(df_clean)
+    except Exception as e:
+        pytest.fail(f"Validador levantou exceção inesperada em dados limpos: {e}") 
+
+
+
+
+
+
+
+
+
+
+
+
+tests/test_time_windows.py
+
+
+
+import pandas as pd
+import pytest
+from src.features.time_windows import features_time_based
+
+
+def test_shift_prevents_leakage_and_counts_correctly():
+    """
+    Verifica se a feature 'num_pix_last_1h' exclui a transação atual (anti-leakage) 
+    e se a contagem funciona corretamente para a próxima transação.
+    """
+
+    # 1. Setup do DataFrame de Teste
+    # T0: 00:00:00, T1: 00:30:00 (Dentro 1h), T2: 01:30:00 (Dentro 1h de T1)
+    df_test = pd.DataFrame(
+        {
+            "user_id": [1, 1, 1],
+            "timestamp": pd.to_datetime(
+                [
+                    "2025-01-01 00:00:00",
+                    "2025-01-01 00:30:00",
+                    "2025-01-01 01:30:00",
+                ]
+            ),
+            "amount": [100, 200, 300],
+        }
+    ).sort_values("timestamp").reset_index(drop=True)
+
+    # 2. Aplica Feature Engineering
+    df_result = features_time_based(df_test)
+
+    # 3. Assertions (Validações Cruciais)
+
+    # Validação A (Anti-Leakage): A primeira transação (T0) deve ter 0.
+    assert (
+        df_result["numpixlast_1h"].iloc[0] == 0
+    ), "Falha no Anti-Leakage: T0 deve ser 0."
+
+    # Validação B (Contagem Correta): A segunda transação (T1, 00:30:00) deve contar 1 evento (T0).
+    assert (
+        df_result["numpixlast_1h"].iloc[1] == 1
+    ), "Falha na Contagem: T1 deve contar 1 evento."
+
+    # Validação C (Contagem Acumulada): A terceira transação (T2, 01:30:00) deve contar 2 eventos (T0 e T1).
+    assert (
+        df_result["numpixlast_1h"].iloc[2] == 2
+    ), "Falha na Contagem: T2 deve contar 2 eventos." 
+
+
+
+
+
+
+
+
+
+
+
+
+.pre-commit-config.yaml
+
+
+repos:
+  # Black - formatação automática
+  - repo: https://github.com/psf/black
+    rev: 24.4.2  # versão estável
+    hooks:
+      - id: black
+        language_version: python3.12
+
+  # Ruff - linting e correções rápidas
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9  # versão estável
+    hooks:
+      - id: ruff
+        args: [--fix]
+
+  # Isort - organização de imports
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        language_version: python3.12 
+
+
+
+
+
+
+
+
+
+
+
+
+.github/workflows/auto-fix-combined.yml
+
+
+name: Auto Fix Combined
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+
+    - name: Run Black + Ruff + Isort (fix mode)
+      run: |
+        poetry run black src tests
+        poetry run ruff check src tests --fix
+        poetry run isort src tests
+
+    - name: Detect changes
+      id: git-diff
+      run: |
+        if git diff --quiet; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "changed=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit and push changes
+      if: steps.git-diff.outputs.changed == 'true'
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "chore: auto-fix style issues (Black + Ruff + Isort)"
+        branch: ${{ github.ref_name }}
+
+    - name: Comment on PR (correções aplicadas)
+      if: github.event_name == 'pull_request' && steps.git-diff.outputs.changed == 'true'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: auto-fix-feature
+        message: |
+          ✅ Correções automáticas de estilo foram aplicadas neste branch de feature.
+          - Ferramentas usadas: **Black** (formatação), **Ruff** (lint + fix), **Isort** (imports).
+          - Commit gerado: `chore: auto-fix style issues (Black + Ruff + Isort)`
+          - Agora o código segue o padrão definido no `pyproject.toml` e deve passar no CI.
+
+    - name: Comment on PR (nenhuma alteração)
+      if: github.event_name == 'pull_request' && steps.git-diff.outputs.changed == 'false'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: auto-fix-feature
+        message: |
+          ✅ Nenhuma alteração de estilo encontrada.
+          - O branch já estava limpo e segue o padrão definido no `pyproject.toml`.
+          - O CI deve passar sem problemas. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+.github/workflows/auto-fix-feature.yml
+
+
+name: Auto Fix Feature Branches
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+
+    - name: Run Black + Ruff + Isort (fix mode)
+      run: |
+        poetry run black src tests
+        poetry run ruff check src tests --fix
+        poetry run isort src tests
+
+    - name: Detect changes
+      id: git-diff
+      run: |
+        if git diff --quiet; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "changed=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit and push changes
+      if: steps.git-diff.outputs.changed == 'true'
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "chore: auto-fix style issues (Black + Ruff + Isort)"
+        branch: ${{ github.ref_name }}
+
+    - name: Comment on PR (correções aplicadas)
+      if: github.event_name == 'pull_request' && steps.git-diff.outputs.changed == 'true'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: auto-fix-feature
+        message: |
+          ✅ Correções automáticas de estilo foram aplicadas neste branch de feature.
+          - Ferramentas usadas: **Black** (formatação), **Ruff** (lint + fix), **Isort** (imports).
+          - Commit gerado: `chore: auto-fix style issues (Black + Ruff + Isort)`
+          - Agora o código segue o padrão definido no `pyproject.toml` e deve passar no CI.
+
+    - name: Comment on PR (nenhuma alteração)
+      if: github.event_name == 'pull_request' && steps.git-diff.outputs.changed == 'false'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: auto-fix-feature
+        message: |
+          ✅ Nenhuma alteração de estilo encontrada.
+          - O branch já estava limpo e segue o padrão definido no `pyproject.toml`.
+          - O CI deve passar sem problemas. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.github/workflows/auto-fix-push.yml
+
+
+
+name: Auto Fix Style on Push
+
+on:
+  push:
+    branches-ignore:
+      - main   # opcional: se não quiser auto-fix direto na main
+      - master # idem, caso exista
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # necessário para commit/push
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+
+    - name: Run make fix
+      run: make fix
+
+    - name: Commit and push changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "chore: auto-fix style issues (Black + Ruff)"
+        branch: ${{ github.ref_name }} 
+
+
+
+
+
+
+
+
+
+
+
+.github/workflows/auto-fix.yml
+
+
+name: Auto Fix Style
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # necessário para commit/push
+      pull-requests: write   # necessário para comentar no PR
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+
+    - name: Run make fix
+      run: make fix
+
+    - name: Commit and push changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "chore: auto-fix style issues (Black + Ruff)"
+        branch: ${{ github.head_ref }}
+
+    - name: Comment on PR
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: auto-fix
+        message: |
+          ✅ Correções automáticas de estilo foram aplicadas neste PR.
+          - Ferramentas usadas: **Ruff** (lint + fix) e **Black** (formatação).
+          - Commit gerado: `chore: auto-fix style issues (Black + Ruff)`
+          - Agora o código segue o padrão PEP8 e deve passar no CI. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.github/workflows/ci.yaml 
+
+
+
+name: CI (Integração Contínua)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📦 Checkout repository
+      # Versão v4 é a mais estável e recente
+      uses: actions/checkout@v4 
+
+    - name: 🐍 Set up Python 3.12
+      # Usando a versão mais recente da action (v5)
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: ⚙️ Install all dependencies (including linters and tests)
+      # Instala todas as dependências do requirements.txt em um só passo
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    # ----------------------------------------------------
+    # Passo 1: LINTING (Verificação de Estilo/Qualidade)
+    # ----------------------------------------------------
+    - name: 🧹 Lint with flake8
+      run: |
+        # flake8 já deve estar instalado via requirements.txt
+        flake8 src tests
+
+    # ----------------------------------------------------
+    # Passo 2: TESTES UNITÁRIOS E DE INTEGRAÇÃO
+    # ----------------------------------------------------
+    - name: ✅ Run PyTest
+      # -q para saída mais concisa
+      run: |
+        pytest -q 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.github/workflows/quality.yml
+
+
+name: Quality Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+
+    # ---------------------------
+    # Black - verificação de formatação
+    # ---------------------------
+    - name: Run Black (check only)
+      run: poetry run black --check src tests
+
+    # ---------------------------
+    # Ruff - linting
+    # ---------------------------
+    - name: Run Ruff
+      run: poetry run ruff check src tests
+
+    # ---------------------------
+    # Isort - organização de imports
+    # ---------------------------
+    - name: Run Isort (check only)
+      run: poetry run isort --check-only src tests
+
+    # ---------------------------
+    # Mypy - checagem de tipos
+    # ---------------------------
+    - name: Run Mypy
+      run: poetry run mypy src 
+
+
+
+
+
+
+
+
+notebooks/01_eda.ipynb
+
+
+Open In Colab
+
+
+
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 01 - Análise Exploratória de Dados (EDA)\n",
+    "\n",
+    "Este notebook realiza a exploração inicial dos dados simulados de transações Pix."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "import seaborn as sns\n",
+    "\n",
+    "df = pd.read_parquet('../data/raw/transactions.parquet')\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Distribuição da variável alvo\n",
+    "sns.countplot(x='is_fraud', data=df)\n",
+    "plt.title('Distribuição da variável alvo (is_fraud)')\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Distribuição dos valores das transações\n",
+    "sns.histplot(df['amount'], bins=50, kde=True)\n",
+    "plt.title('Distribuição dos valores das transações')\n",
+    "plt.show()"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
+     
+
+
+
+
+
+
+
+
+
+
+
+
+notebooks/02_feature_inspection.ipynb
+
+
+
+Open In Colab
+
+
+
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 02 - Inspeção das Features\n",
+    "\n",
+    "Este notebook analisa as features de agregação temporal e categóricas."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import seaborn as sns\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "df = pd.read_parquet('../data/processed/dataset.parquet')\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Correlação entre features numéricas e target\n",
+    "corr = df.corr(numeric_only=True)['is_fraud'].sort_values(ascending=False)\n",
+    "print(corr)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Boxplot de uma feature temporal\n",
+    "sns.boxplot(x='is_fraud', y='num_pix_last_1h', data=df)\n",
+    "plt.title('Distribuição de num_pix_last_1h por classe')\n",
+    "plt.show()"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+notebooks/03_threshold_analysis.ipynb
+
+
+
+
+Open In Colab
+
+
+
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 03 - Análise de Threshold\n",
+    "\n",
+    "Este notebook avalia diferentes pontos de corte para equilibrar Recall e FPR."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "from sklearn.metrics import recall_score, confusion_matrix\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "df = pd.read_parquet('../data/processed/dataset.parquet')\n",
+    "from joblib import load\n",
+    "model = load('../models/artifacts/model_xgb.joblib')\n",
+    "\n",
+    "X = df.drop(columns=['is_fraud'])\n",
+    "y = df['is_fraud']\n",
+    "proba = model.predict_proba(X)[:,1]\n",
+    "\n",
+    "thresholds = np.linspace(0.1, 0.99, 20)\n",
+    "recalls, fprs = [], []\n",
+    "for t in thresholds:\n",
+    "    y_pred = (proba >= t).astype(int)\n",
+    "    recalls.append(recall_score(y, y_pred))\n",
+    "    cm = confusion_matrix(y, y_pred)\n",
+    "    fp = cm[0,1]\n",
+    "    tn = cm[0,0]\n",
+    "    fprs.append(fp / (fp+tn))\n",
+    "\n",
+    "plt.plot(thresholds, recalls, label='Recall')\n",
+    "plt.plot(thresholds, fprs, label='FPR')\n",
+    "plt.xlabel('Threshold')\n",
+    "plt.ylabel('Métrica')\n",
+    "plt.legend()\n",
+    "plt.title('Trade-off Recall vs FPR')\n",
+    "plt.show()"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
+     
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+/tmp/ipython-input-1019875094.py in <cell line: 0>()
+     12   {
+     13    "cell_type": "code",
+---> 14    "execution_count": null,
+     15    "metadata": {},
+     16    "outputs": [],
+
+NameError: name 'null' is not defined
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+As regras de Meigarom Lopes e Luiz Café:
+
+
+
+ Luiz Café Tech Recruiter 
+
+
+Como escrever um README que torna seu Portfólio Legível para Recrutadores
+
+
+
+Olá, comunidade da DIO!
+
+Ao longo da minha carreira como Tech Recruiter, já avaliei centenas de repositórios no GitHub de desenvolvedores em diferentes níveis: júnior, pleno e sênior. E há algo que percebo com muita frequência ao longo desses anos, uma verdade que pode doer um pouco:
+
+Na maioria dos casos, o README decide se eu continuo analisando o repositório ou se sigo para o próximo candidato.
+E isso não acontece porque o código seja irrelevante, muito pelo contrário. Já encontrei projetos tecnicamente brilhantes que, infelizmente, passam despercebidos por muitos recrutadores que não possuem conhecimento técnico aprofundado para avaliá-los.
+
+Além disso, o tempo é escasso. São várias vagas para preencher em um curto período. É exatamente nesse cenário que o README ganha importância: ele é o primeiro sinal de que você sabe explicar o que construiu e por quê.
+
+Este artigo tem um objetivo simples: mostrar como tornar seu portfólio legível para recrutadores, sem truques, exageros ou promessas mágicas. Tudo o que compartilho aqui vem da prática real de quem avalia repositórios diariamente.
+
+Vamos lá?
+
+O erro mais comum que vejo em READMEs de portfólio
+Na maioria das vezes, o problema não é falta de código, e sim, falta de contexto.
+
+O que vejo com frequência em READMEs:
+
+Apenas dizem “Projeto feito em X tecnologia”, sem explicar o objetivo, a motivação ou as decisões envolvidas;
+READMEs claramente copiados de templates genéricos, o que demonstra falta de curiosidade e cuidado;
+Não explicam qual problema o projeto resolve.
+No dia a dia, o trabalho de um desenvolvedor é resolver problemas complexos. Se um profissional não consegue demonstrar isso no próprio repositório, ele tende a ir para o final da fila, quando não é descartado logo de início.
+
+Quando isso acontece, a sensação para quem avalia é simples:
+
+Não fica claro o que essa pessoa realmente sabe fazer;
+Parece que não há responsabilidade sobre o que foi produzido;
+Transmite desleixo e falta de profissionalismo.
+O que um recrutador quer encontrar em um repositório?
+Quando um recrutador técnico abre seu repositório, ele tenta responder rapidamente perguntas como:
+
+Que problema esse projeto resolve?
+Esse dev entende o que construiu ou apenas seguiu um tutorial?
+Ele sabe justificar suas escolhas técnicas?
+Qual o nível de complexidade do projeto?
+Como esse dev trabalha em equipe?
+Ele demonstra atualização constante?
+Aqui vale um ponto importante:
+
+Legibilidade não tem a ver com simplicidade.
+Você pode, e deve, criar projetos complexos, desde que haja intencionalidade clara. Um bom README não tenta impressionar; ele explica. E explicar bem é uma habilidade extremamente valorizada.
+
+A estrutura de README que funciona na prática
+Após analisar muitos repositórios, esta é a estrutura que mais facilita minha avaliação como recrutador. Você não precisa usar todas as seções, mas quanto mais contexto fornecer, melhor.
+
+Visão geral
+Explique em poucas linhas:
+
+O que é o projeto
+Qual problema ele resolve
+Exemplo:
+
+Aplicação web para gerenciamento de tarefas, voltada para usuários que precisam organizar demandas recorrentes de forma simples e eficiente.
+
+Objetivo do projeto
+Aqui você demonstra intencionalidade.
+
+Responda:
+
+Por que você criou esse projeto?
+Era para aprender algo específico?
+Resolver um problema real?
+Exemplo:
+
+Criei este projeto para aprofundar meus conhecimentos em autenticação JWT e na organização de uma API REST escalável.
+
+Decisões técnicas
+Essa é uma das seções mais importantes, e também uma das mais ignoradas.
+
+Explique:
+
+Por que escolheu essa stack;
+Quais alternativas considerou;
+Quais trade-offs aceitou.
+Exemplo:
+
+Optei por Node.js com Express pela simplicidade e maturidade do ecossistema. Avaliei utilizar NestJS, mas para o escopo do projeto preferi uma abordagem mais direta e com menor curva de aprendizado.
+Isso demonstra pensamento crítico, algo extremamente valorizado em processos seletivos.
+
+Tecnologias utilizadas
+Seja objetivo e evite listas infladas sem propósito.
+
+Exemplo:
+
+Node.js
+Express
+PostgreSQL
+JWT para autenticação
+Docker para ambiente de desenvolvimento
+
+Como executar o projeto
+Simples, mas faz muita diferença.
+
+Inclua:
+
+Pré-requisitos;
+Passos claros para rodar o projeto localmente.
+Isso demonstra cuidado, organização e respeito por quem está avaliando.
+
+Aprendizados
+Essa seção costuma ser decisiva.
+
+Aqui você pode responder:
+
+O que foi mais difícil e como pretende superar essas adversidades?
+Quais foram seus principais aprendizados?
+O que faria diferente hoje?
+Quem te ajudou ou inspirou durante o desenvolvimento?
+Exemplo:
+
+Aprendi a importância de separar regras de negócio da camada de controllers, o que facilitou a escrita de testes e a manutenção do código.
+
+Próximos passos
+Mostrar que o projeto não está “fechado” é um ponto positivo.
+
+Exemplo:
+
+Melhorar a cobertura de testes
+Implementar cache
+Refatorar parte da arquitetura
+Isso demonstra visão de evolução e maturidade técnica.
+
+
+O README como narrativa técnica
+O README não é apenas documentação. Ele é a sua narrativa técnica.
+
+Para nós, recrutadores, o README funciona melhor quando conta uma história clara:
+
+Qual era o problema;
+Quais decisões você tomou;
+Quais foram seus aprendizados, erros e acertos;
+Como foi sua jornada de desenvolvimento.
+Mesmo um projeto simples pode se tornar relevante quando bem explicado. É por isso que alguns candidatos conseguem oportunidades mesmo com poucos projetos, porque sabem comunicar bem seu raciocínio.
+
+Para quem esse modelo de README funciona melhor?
+Com base na minha experiência, esse modelo é especialmente útil para:
+
+Desenvolvedores júnior e pleno;
+Pessoas em transição de carreira;
+Profissionais sênior que contribuem com projetos open source.
+O segredo é facilitar a vida de quem avalia. Se o recrutador entende rapidamente seu raciocínio, suas chances de avançar aumentam.
+
+Considerações finais
+Espero sinceramente que, após este artigo, você tenha entendido a importância de dedicar tempo à escrita de um bom README. Ele não garante uma vaga, mas evita que você seja eliminado logo de cara. Minha dica final é: invista tempo, revise, peça para amigos e colegas lerem o que você escreveu. Feedback externo ajuda a identificar falhas e melhorar a clareza.
+
+Inspire-se em outros READMEs, mas evite copiar e colar. Seja autoral. É assim que você se destaca.
+
+Bons estudos e projetos!
+
+
+
+
+Let´s code! 
+
+
+
+
+
+
+
+
+Código de conduta
+
+Luiz Café - 16/12/2025 11:50
+Olá, Alex! Obrigado pelo seu comentário. A área de dados está com muitas oportunidades abertas, capriche nos seus projetos e no Readme que as portas irão se abrir. Não deixe também de participar das competições no Kaggle para ganhar destaque e experiência. Muito sucesso!
+
+
+
+Brasil
+Luiz Café - 16/12/2025 11:48
+Olá, Nubia. Muito obrigado pelo seu feedback, ele é muito importante para que eu continue escrevendo artigos como esse. Desejo muito sucesso na sua carreira.
+
+
+
+Brasil
+Alex Almeida - 16/12/2025 09:25
+Muito Bacana.
+
+Já venho melhorando os meu reddits em busca de uma oportunidade na área de dados
+
+
+
+Brasil
+Nubia Alves - 15/12/2025 22:16
+Olá, Luiz,
+
+Que riqueza de material que você se dispôs a compartilhar!
+
+Já estou salvando esse material no meu notebookLM porque ele merece ser lido mais de uma vez e ser seguido como roteiro para o meu próximo README de projetos.
+
+
+
+Brasil
+Luiz Café - 15/12/2025 21:06
+Muito obrigado Manuel. Seu comentário me motiva a continuar compartilhando conteúdos como esse para toda comunidade. Fico feliz em ajudar.
+
+
+
+MN
+Manuel Nvula - 15/12/2025 17:45
+Muito bom e útil o artigo, Luiz Café. Obrigado por compartilhar.
+
+Aprendi bastante com ele.
+
+
+
+
+
+REGRAS DE MEIGAROM DA CDS PARA DOCUMENTAÇÃO DE PROJETOS COMO CIENTISTA DE DADOS PROFISSIONAL 
+
+
+
+
+MEIGAROM DA CDS
+
+
+
+
+Análise de Atrasos de Entregas da Amazon
+
+1. Problema de Negócio
+
+A empresa enfrenta um aumento no número de entregas realizadas fora do prazo, o que tem
+gerado insatisfação dos clientes, aumento de reclamações e risco de perda de confiança na
+marca.
+O principal desafio do negócio é entender por que os atrasos acontecem, identificar onde
+eles se concentram e gerar informações claras que apoiem decisões operacionais para
+reduzir a taxa de atraso e melhorar a previsibilidade das entregas.
+
+2. Contexto
+
+A operação de entregas envolve diferentes variáveis que impactam diretamente o prazo, como:
+● condições climáticas,
+● tráfego,
+● tipo de veículo utilizado,
+● área de entrega,
+● perfil do entregador,
+● categoria do produto.
+A empresa já possui os dados operacionais registrados em uma base histórica, mas não utiliza
+essas informações de forma analítica para apoiar decisões estratégicas.
+O objetivo deste projeto é transformar dados brutos de entregas em insights acionáveis,
+utilizando análises descritivas e visualizações simples, capazes de serem compreendidas por
+áreas como Operações, Logística e Gestão.
+
+
+3. Premissas da análise
+
+Para a realização da análise, foram adotadas as seguintes premissas:
+
+
+
+● O status de entrega (Delivery_Status) é considerado a fonte oficial para identificar
+atrasos (delay) e entregas no prazo (ontime).
+● O tempo de entrega (Delivery_Time) está representado em minutos.
+● Registros com valores ausentes em colunas como tráfego ou clima foram tratados como
+“informação desconhecida” ou excluídos quando necessário.
+● As análises foram feitas com foco em identificação de padrões, não em causalidade
+estatística.
+● O período analisado representa uma amostra válida do comportamento operacional
+recente da empresa.
+
+4. Estratégia da solução
+
+A estratégia adotada seguiu uma abordagem estruturada de análise de dados:
+
+1. Entendimento do problema de negócio
+Identificar claramente o que significa atraso e por que ele é prejudicial para a empresa.
+
+2. Exploração e organização dos dados
+Compreensão das colunas, tipos de dados e possíveis inconsistências.
+
+3. Análise descritiva
+Cálculo de métricas como quantidade de entregas, taxa de atraso e estatísticas de
+tempo de entrega.
+
+4. Segmentação dos atrasos
+Avaliação dos atrasos por diferentes dimensões:
+○ tempo,
+○ área,
+○ clima,
+○ tráfego,
+○ veículo,
+○ categoria de produtos
+
+5. Visualização dos dados
+Criação de gráficos claros para facilitar a interpretação dos resultados e comunicação
+com o negócio.
+
+
+5. Insights da Análise
+
+A análise dos dados permitiu identificar padrões relevantes, como:
+● O tempo médio de entrega é de 125 min (2h) com desvio-padrão de 52 min (2h). A
+entrega mais rápida aconteceu em 10 min e a mais lenta em 270 min (4,5h).
+
+
+
+A área “Semi-Urban” é a única área que apresenta mais atrasos do que entregas sem
+atraso.
+● Os atrasos aumentam em dias nublados e com neblina, e diminuem em dias de sol.
+● Veículos como motocicletas apresentam maior taxa de entrega atrasada em relação aos
+outros meios de transporte.
+● O nível de tráfego forte ( Jam ), apresenta mais atrasos.
+● Os maiores atrasos aconteceram com entregas para a área “Semi-Urban” realizadas por
+motocicletas como veículo.
+● Entregadores com idade acima dos 30 anos tendem a atrasar mais as entregas do que
+entregadores abaixo dos 30.
+● As entregas estão distribuídas uniformemente entre as categorias, exceto a categoria
+outros que representa 43% das entregas.
+● A menor avaliação acontece com entregas na área “Semi-Urbam” com o veículo
+motocicleta que também apresenta maior volume de atrasos.
+Esses insights mostram que o atraso não é aleatório, mas resultado de fatores operacionais
+como área e tipo de veículos para entrega.
+
+
+6. Resultados
+
+
+Como resultado do projeto, as iniciativas são:
+● Aprofundar o entendimento do motivo pelo qual a área “Semi-Urban” tem os maiores
+volumes de atraso.
+● Mudar o tipo de veículo de entrega para a área “Semi-Urban”
+● Diagnóstico visual dos pontos mais críticos da operação.
+● Base analítica para priorizar ações corretivas.
+● Relatórios e gráficos que podem ser utilizados por áreas não técnicas.
+Além disso, o projeto demonstra como a análise de dados pode transformar dados
+operacionais em decisões práticas, mesmo utilizando técnicas simples.
+
+
+7. Próximos passos
+
+
+Com base nos resultados obtidos, os próximos passos recomendados são:
+● Criar planos de ação específicos para áreas, veículos e condições mais críticas.
+● Monitorar a taxa de atraso de forma contínua por meio de dashboards.
+● Avaliar treinamentos ou ajustes operacionais para entregadores e rotas.
+● Integrar análises preditivas para antecipar riscos de atraso.
+
+
+Aprofundar a análise com dados adicionais, como distância percorrida ou horário de
+pico.
+Este projeto serve como primeiro passo para uma cultura orientada a dados, onde decisões
+operacionais passam a ser guiadas por evidências e não apenas por percepção. 
+
+
+
+
+Estrutura de um Projeto de Dados de Sucesso:
+
+​O MEIGAROM destaca que um projeto não deve ser apenas um "gráfico bonito", mas deve seguir 7 passos:
+
+​1- Problema de Negócio: O que motivou a análise?
+
+​2- Contexto: O cenário da empresa.
+
+​3- Premissas: O que foi considerado verdade nos dados.
+
+​4- Estratégia da Solução: O passo a passo técnico.
+
+​5- Insights: A interpretação dos dados (o que os gráficos dizem).
+
+​6- Resultados: Conclusão e recomendação para a empresa.
+
+​7- Próximos Passos: O que seria feito com mais tempo.
+
+
+
+
+
+Implementação dos 11 Passos Profissionais (Framework CDS) DE MEIGAROM LOPES 
+
+​Para o seu README refletir esse novo nível, você deve reorganizar as seções seguindo fielmente a metodologia do vídeo:
+
+​Problema de Negócio: (Você já tem - Redução de multas na MRV).
+​Baseline: Novo! Como a MRV prevê atrasos hoje? (Ex: "Hoje a empresa usa apenas a média histórica de 10 dias"). O seu modelo precisa bater essa média.
+​Planejamento da Solução: Liste as ferramentas (Python, Scikit-Learn, Telegram API, Render Cloud).
+​Limpeza de Dados: Detalhe como tratou inconsistências de clima e solo.
+​EDA (Exploratória): Foque em validar hipóteses (Ex: "Obras em solo arenoso atrasam 20% mais?").
+​Preparação de Dados: Explique o One-Hot Encoding e Scaler.
+​Treinamento: Justifique a escolha do algoritmo (Random Forest).
+​Performance: Apresente o MAE e RMSE.
+​Business Performance: O Pulo do Gato! Converta o erro do modelo em Reais (R$). "Cada dia de atraso custa R$ X. Com erro de 5 dias, o risco financeiro residual é de R$ Y."
+​Modelo em Produção: Explique como a API Flask/FastAPI serve o modelo.
+​Storytelling: A apresentação final (O Bot do Telegram).
+
+
+
+  Pontos importantes: 
+
+Para virar um resolvedor de problemas, 
+você tem que mostrar que resolve problemas com a ferramenta, e não que apenas usa a ferramentia. 
+
+Você tem que se posicionar como um resolvedor de problemas.
+
+O mercado de trabalho não contrata ferramenta, o mercado de trabalho contrata quem resolve problemas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
